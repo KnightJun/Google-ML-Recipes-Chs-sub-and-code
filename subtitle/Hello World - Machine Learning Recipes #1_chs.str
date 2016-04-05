@@ -183,22 +183,19 @@ So that's the state-of-the-art.
 
 46
 00:01:30,920 --> 00:01:33,043
-That works fine for
-simple images like these.
+这能应付像这种一样简单的图像
 
 47
 00:01:33,043 --> 00:01:34,709
-But as you dive deeper
-into the problem,
+但是当你深入研究这个问题
 
 48
 00:01:34,709 --> 00:01:37,099
-you'll find the real world
-is messy, and the rules you
+你会发现这个世界是复杂的
 
 49
 00:01:37,099 --> 00:01:38,650
-write start to break.
+你编写的规则也不再适用
 
 50
 00:01:38,650 --> 00:01:41,180
@@ -212,57 +209,47 @@ or oranges in them at all?
 
 52
 00:01:44,480 --> 00:01:46,360
-In fact, for just about
-any rule you write,
+实际上对于你编写的任何规则
 
 53
 00:01:46,360 --> 00:01:48,790
-I can find an image
-where it won't work.
+我都让找到让它不适用的图像
 
 54
 00:01:48,790 --> 00:01:50,310
-You'd need to write
-tons of rules,
+你需要编写成吨的规则,
 
 55
 00:01:50,310 --> 00:01:52,518
-and that's just to tell the
-difference between apples
+而这仅仅是为了辨别出苹果和橙子
 
 56
 00:01:52,518 --> 00:01:53,690
-and oranges.
+图像的不同之处
 
 57
 00:01:53,690 --> 00:01:57,390
-If I gave you a new problem, you
-need to start all over again.
+如果我给你一个新的问题，你又得重新开始
 
 58
 00:01:57,390 --> 00:01:59,079
-Clearly, we need
-something better.
+显然我们需要更好的方法
 
 59
 00:01:59,079 --> 00:02:00,760
-To solve this, we
-need an algorithm
+因此我们需要一种算法
 
 60
 00:02:00,760 --> 00:02:02,480
-that can figure out
-the rules for us,
+能为我们找出其中的规则
 
 61
 00:02:02,480 --> 00:02:04,599
-so we don't have to
-write them by hand.
+让我们不必要人工地写这些规则
 
 62
 00:02:04,599 --> 00:02:07,690
-And for that, we're going
-to train a classifier.
+为此，我们来编写一个分类器
 
 63
 00:02:07,690 --> 00:02:10,360
