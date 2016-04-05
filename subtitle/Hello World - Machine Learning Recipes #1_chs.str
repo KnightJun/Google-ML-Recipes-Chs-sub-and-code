@@ -29,79 +29,67 @@ Gordon, 今天我将会
 
 8
 00:00:14,374 --> 00:00:16,039
-In the first few
-episodes of the series,
+在这系列视频的最初几集,
 
 9
 00:00:16,039 --> 00:00:17,998
-we'll teach you how to
-get started with Machine
+我们会教你怎么从头开始
 
 10
 00:00:17,998 --> 00:00:19,079
-Learning from scratch.
+学习机器学习
 
 11
 00:00:19,079 --> 00:00:21,560
-To do that, we'll work with
-two open source libraries,
+首先，我们需要两个开源库,
 
 12
 00:00:21,560 --> 00:00:23,706
-scikit-learn and TensorFlow.
+scikit-learn和TensorFlow.
 
 13
 00:00:23,706 --> 00:00:25,330
-We'll see scikit in
-action in a minute.
+我们即将使用scikit库
 
 14
 00:00:25,330 --> 00:00:27,830
-But first, let's talk quickly
-about what Machine Learning is
+但首先，让我们大概说一下什么是机器学习
 
 15
 00:00:27,830 --> 00:00:29,240
-and why it's important.
+以及它的重要性
 
 16
 00:00:29,240 --> 00:00:31,198
-You can think of Machine
-Learning as a subfield
+你可以把机器学习看作
 
 17
 00:00:31,198 --> 00:00:32,409
-of artificial intelligence.
+人工智能科学的一个分支
 
 18
 00:00:32,409 --> 00:00:35,610
-Early AI programs typically
-excelled at just one thing.
+早期的AI程序通常只擅长特定的事
 
 19
 00:00:35,610 --> 00:00:37,240
-For example, Deep
-Blue could play chess
+比如说“深蓝”能像顶级棋手一样
 
 20
 00:00:37,240 --> 00:00:40,150
-at a championship level,
-but that's all it could do.
+下国际象棋，不过它也只会干这个
 
 21
 00:00:40,150 --> 00:00:41,780
-Today we want to
-write one program that
+现在我们想写出一个能解决许多不同问题的
 
 22
 00:00:41,780 --> 00:00:45,340
-can solve many problems without
-needing to be rewritten.
+程序而不是对每个问题都写一个
 
 23
 00:00:45,340 --> 00:00:47,460
-AlphaGo is a great
-example of that.
+AlphaGo是一个很好的例子
 
 24
 00:00:47,460 --> 00:00:50,150
