@@ -253,46 +253,39 @@ or oranges in them at all?
 
 63
 00:02:07,690 --> 00:02:10,360
-For now you can think of a
-classifier as a function.
+现在你可以把一个分类器当作一个函数
 
 64
 00:02:10,360 --> 00:02:13,160
-It takes some data as input
-and assigns a label to it
+输入一些数据然后为其分配一个标签
 
 65
 00:02:13,160 --> 00:02:14,282
-as output.
+作为输出
 
 66
 00:02:14,282 --> 00:02:15,740
-For example, I
-could have a picture
+例如我有一张图片，想对它进行
 
 67
 00:02:15,740 --> 00:02:18,235
-and want to classify it
-as an apple or an orange.
+分类，判断这是苹果还是橙子
 
 68
 00:02:18,235 --> 00:02:20,110
-Or I have an email, and
-I want to classify it
+又或者我有一封邮件想对其分类
 
 69
 00:02:20,110 --> 00:02:22,039
-as spam or not spam.
+看是否为垃圾邮件
 
 70
 00:02:22,039 --> 00:02:23,690
-The technique to
-write the classifier
+这种自动写出分类器的技术
 
 71
 00:02:23,690 --> 00:02:26,220
-automatically is called
-supervised learning.
+被称为有监督学习(supervised learning)
 
 72
 00:02:26,220 --> 00:02:29,319
