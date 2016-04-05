@@ -1,0 +1,910 @@
+1
+00:00:00,000 --> 00:00:00,000
+Youtube subtitles download by mo.dbxdb.com 
+
+2
+00:00:00,000 --> 00:00:02,886
+[MUSIC PLAYING]
+
+3
+00:00:02,886 --> 00:00:06,726
+
+
+4
+00:00:06,726 --> 00:00:08,100
+Six lines of code
+is all it takes
+
+5
+00:00:08,100 --> 00:00:10,130
+to write your first
+Machine Learning program.
+
+6
+00:00:10,130 --> 00:00:11,671
+My name's Josh
+Gordon, and today I'll
+
+7
+00:00:11,671 --> 00:00:14,374
+walk you through writing Hello
+World for Machine learning.
+
+8
+00:00:14,374 --> 00:00:16,039
+In the first few
+episodes of the series,
+
+9
+00:00:16,039 --> 00:00:17,998
+we'll teach you how to
+get started with Machine
+
+10
+00:00:17,998 --> 00:00:19,079
+Learning from scratch.
+
+11
+00:00:19,079 --> 00:00:21,560
+To do that, we'll work with
+two open source libraries,
+
+12
+00:00:21,560 --> 00:00:23,706
+scikit-learn and TensorFlow.
+
+13
+00:00:23,706 --> 00:00:25,330
+We'll see scikit in
+action in a minute.
+
+14
+00:00:25,330 --> 00:00:27,830
+But first, let's talk quickly
+about what Machine Learning is
+
+15
+00:00:27,830 --> 00:00:29,240
+and why it's important.
+
+16
+00:00:29,240 --> 00:00:31,198
+You can think of Machine
+Learning as a subfield
+
+17
+00:00:31,198 --> 00:00:32,409
+of artificial intelligence.
+
+18
+00:00:32,409 --> 00:00:35,610
+Early AI programs typically
+excelled at just one thing.
+
+19
+00:00:35,610 --> 00:00:37,240
+For example, Deep
+Blue could play chess
+
+20
+00:00:37,240 --> 00:00:40,150
+at a championship level,
+but that's all it could do.
+
+21
+00:00:40,150 --> 00:00:41,780
+Today we want to
+write one program that
+
+22
+00:00:41,780 --> 00:00:45,340
+can solve many problems without
+needing to be rewritten.
+
+23
+00:00:45,340 --> 00:00:47,460
+AlphaGo is a great
+example of that.
+
+24
+00:00:47,460 --> 00:00:50,150
+As we speak, it's competing
+in the World Go Championship.
+
+25
+00:00:50,150 --> 00:00:53,740
+But similar software can also
+learn to play Atari games.
+
+26
+00:00:53,740 --> 00:00:55,956
+Machine Learning is what
+makes that possible.
+
+27
+00:00:55,956 --> 00:00:57,330
+It's the study of
+algorithms that
+
+28
+00:00:57,330 --> 00:00:59,039
+learn from examples
+and experience
+
+29
+00:00:59,039 --> 00:01:00,909
+instead of relying
+on hard-coded rules.
+
+30
+00:01:00,909 --> 00:01:02,200
+So that's the state-of-the-art.
+
+31
+00:01:02,200 --> 00:01:03,750
+But here's a much
+simpler example
+
+32
+00:01:03,750 --> 00:01:05,632
+we'll start coding up today.
+
+33
+00:01:05,632 --> 00:01:07,590
+I'll give you a problem
+that sounds easy but is
+
+34
+00:01:07,590 --> 00:01:09,662
+impossible to solve
+without Machine Learning.
+
+35
+00:01:09,662 --> 00:01:11,370
+Can you write code to
+tell the difference
+
+36
+00:01:11,370 --> 00:01:12,774
+between an apple and an orange?
+
+37
+00:01:12,774 --> 00:01:15,190
+Imagine I asked you to write
+a program that takes an image
+
+38
+00:01:15,190 --> 00:01:17,069
+file as input,
+does some analysis,
+
+39
+00:01:17,069 --> 00:01:18,650
+and outputs the types of fruit.
+
+40
+00:01:18,650 --> 00:01:20,040
+How can you solve this?
+
+41
+00:01:20,040 --> 00:01:22,526
+You'd have to start by
+writing lots of manual rules.
+
+42
+00:01:22,526 --> 00:01:23,900
+For example, you
+could write code
+
+43
+00:01:23,900 --> 00:01:26,316
+to count how many orange pixels
+there are and compare that
+
+44
+00:01:26,316 --> 00:01:27,569
+to the number of green ones.
+
+45
+00:01:27,569 --> 00:01:30,920
+The ratio should give you a
+hint about the type of fruit.
+
+46
+00:01:30,920 --> 00:01:33,043
+That works fine for
+simple images like these.
+
+47
+00:01:33,043 --> 00:01:34,709
+But as you dive deeper
+into the problem,
+
+48
+00:01:34,709 --> 00:01:37,099
+you'll find the real world
+is messy, and the rules you
+
+49
+00:01:37,099 --> 00:01:38,650
+write start to break.
+
+50
+00:01:38,650 --> 00:01:41,180
+How would you write code to
+handle black-and-white photos
+
+51
+00:01:41,180 --> 00:01:44,480
+or images with no apples
+or oranges in them at all?
+
+52
+00:01:44,480 --> 00:01:46,360
+In fact, for just about
+any rule you write,
+
+53
+00:01:46,360 --> 00:01:48,790
+I can find an image
+where it won't work.
+
+54
+00:01:48,790 --> 00:01:50,310
+You'd need to write
+tons of rules,
+
+55
+00:01:50,310 --> 00:01:52,518
+and that's just to tell the
+difference between apples
+
+56
+00:01:52,518 --> 00:01:53,690
+and oranges.
+
+57
+00:01:53,690 --> 00:01:57,390
+If I gave you a new problem, you
+need to start all over again.
+
+58
+00:01:57,390 --> 00:01:59,079
+Clearly, we need
+something better.
+
+59
+00:01:59,079 --> 00:02:00,760
+To solve this, we
+need an algorithm
+
+60
+00:02:00,760 --> 00:02:02,480
+that can figure out
+the rules for us,
+
+61
+00:02:02,480 --> 00:02:04,599
+so we don't have to
+write them by hand.
+
+62
+00:02:04,599 --> 00:02:07,690
+And for that, we're going
+to train a classifier.
+
+63
+00:02:07,690 --> 00:02:10,360
+For now you can think of a
+classifier as a function.
+
+64
+00:02:10,360 --> 00:02:13,160
+It takes some data as input
+and assigns a label to it
+
+65
+00:02:13,160 --> 00:02:14,282
+as output.
+
+66
+00:02:14,282 --> 00:02:15,740
+For example, I
+could have a picture
+
+67
+00:02:15,740 --> 00:02:18,235
+and want to classify it
+as an apple or an orange.
+
+68
+00:02:18,235 --> 00:02:20,110
+Or I have an email, and
+I want to classify it
+
+69
+00:02:20,110 --> 00:02:22,039
+as spam or not spam.
+
+70
+00:02:22,039 --> 00:02:23,690
+The technique to
+write the classifier
+
+71
+00:02:23,690 --> 00:02:26,220
+automatically is called
+supervised learning.
+
+72
+00:02:26,220 --> 00:02:29,319
+It begins with examples of
+the problem you want to solve.
+
+73
+00:02:29,319 --> 00:02:31,620
+To code this up, we'll
+work with scikit-learn.
+
+74
+00:02:31,620 --> 00:02:34,094
+Here, I'll download and
+install the library.
+
+75
+00:02:34,094 --> 00:02:35,970
+There are a couple
+different ways to do that.
+
+76
+00:02:35,970 --> 00:02:38,241
+But for me, the easiest
+has been to use Anaconda.
+
+77
+00:02:38,241 --> 00:02:40,449
+This makes it easy to get
+all the dependencies set up
+
+78
+00:02:40,449 --> 00:02:42,440
+and works well cross-platform.
+
+79
+00:02:42,440 --> 00:02:44,190
+With the magic of
+video, I'll fast forward
+
+80
+00:02:44,190 --> 00:02:45,776
+through downloading
+and installing it.
+
+81
+00:02:45,776 --> 00:02:47,150
+Once it's installed,
+you can test
+
+82
+00:02:47,150 --> 00:02:48,608
+that everything is
+working properly
+
+83
+00:02:48,608 --> 00:02:51,364
+by starting a Python script
+and importing SK learn.
+
+84
+00:02:51,364 --> 00:02:53,780
+Assuming that worked, that's
+line one of our program down,
+
+85
+00:02:53,780 --> 00:02:56,145
+five to go.
+
+86
+00:02:56,145 --> 00:02:57,520
+To use supervised
+learning, we'll
+
+87
+00:02:57,520 --> 00:03:00,280
+follow a recipe with
+a few standard steps.
+
+88
+00:03:00,280 --> 00:03:02,340
+Step one is to
+collect training data.
+
+89
+00:03:02,340 --> 00:03:04,789
+These are examples of the
+problem we want to solve.
+
+90
+00:03:04,789 --> 00:03:06,789
+For our problem, we're
+going to write a function
+
+91
+00:03:06,789 --> 00:03:08,002
+to classify a piece of fruit.
+
+92
+00:03:08,002 --> 00:03:10,210
+For starters, it will take
+a description of the fruit
+
+93
+00:03:10,210 --> 00:03:11,680
+as input and
+predict whether it's
+
+94
+00:03:11,680 --> 00:03:14,349
+an apple or an orange as
+output, based on features
+
+95
+00:03:14,349 --> 00:03:16,310
+like its weight and texture.
+
+96
+00:03:16,310 --> 00:03:18,160
+To collect our
+training data, imagine
+
+97
+00:03:18,160 --> 00:03:19,310
+we head out to an orchard.
+
+98
+00:03:19,310 --> 00:03:21,060
+We'll look at different
+apples and oranges
+
+99
+00:03:21,060 --> 00:03:23,627
+and write down measurements
+that describe them in a table.
+
+100
+00:03:23,627 --> 00:03:25,210
+In Machine Learning
+these measurements
+
+101
+00:03:25,210 --> 00:03:26,650
+are called features.
+
+102
+00:03:26,650 --> 00:03:28,970
+To keep things simple,
+here we've used just two--
+
+103
+00:03:28,970 --> 00:03:31,650
+how much each fruit weighs in
+grams and its texture, which
+
+104
+00:03:31,650 --> 00:03:33,830
+can be bumpy or smooth.
+
+105
+00:03:33,830 --> 00:03:35,860
+A good feature makes
+it easy to discriminate
+
+106
+00:03:35,860 --> 00:03:37,960
+between different
+types of fruit.
+
+107
+00:03:37,960 --> 00:03:40,210
+Each row in our training
+data is an example.
+
+108
+00:03:40,210 --> 00:03:42,259
+It describes one piece of fruit.
+
+109
+00:03:42,259 --> 00:03:44,240
+The last column is
+called the label.
+
+110
+00:03:44,240 --> 00:03:46,257
+It identifies what type
+of fruit is in each row,
+
+111
+00:03:46,257 --> 00:03:47,840
+and there are just
+two possibilities--
+
+112
+00:03:47,840 --> 00:03:49,430
+apples and oranges.
+
+113
+00:03:49,430 --> 00:03:51,560
+The whole table is
+our training data.
+
+114
+00:03:51,560 --> 00:03:53,069
+Think of these as
+all the examples
+
+115
+00:03:53,069 --> 00:03:55,120
+we want the classifier
+to learn from.
+
+116
+00:03:55,120 --> 00:03:57,660
+The more training data you
+have, the better a classifier
+
+117
+00:03:57,660 --> 00:03:59,310
+you can create.
+
+118
+00:03:59,310 --> 00:04:01,620
+Now let's write down our
+training data in code.
+
+119
+00:04:01,620 --> 00:04:04,150
+We'll use two variables--
+features and labels.
+
+120
+00:04:04,150 --> 00:04:06,060
+Features contains the
+first two columns,
+
+121
+00:04:06,060 --> 00:04:07,887
+and labels contains the last.
+
+122
+00:04:07,887 --> 00:04:09,470
+You can think of
+features as the input
+
+123
+00:04:09,470 --> 00:04:13,401
+to the classifier and labels
+as the output we want.
+
+124
+00:04:13,401 --> 00:04:15,650
+I'm going to change the
+variable types of all features
+
+125
+00:04:15,650 --> 00:04:18,980
+to ints instead of strings,
+so I'll use 0 for bumpy and 1
+
+126
+00:04:18,980 --> 00:04:19,937
+for smooth.
+
+127
+00:04:19,937 --> 00:04:22,269
+I'll do the same for our
+labels, so I'll use 0 for apple
+
+128
+00:04:22,269 --> 00:04:23,740
+and 1 for orange.
+
+129
+00:04:23,740 --> 00:04:26,300
+These are lines two and
+three in our program.
+
+130
+00:04:26,300 --> 00:04:29,160
+Step two in our recipes to
+use these examples to train
+
+131
+00:04:29,160 --> 00:04:30,440
+a classifier.
+
+132
+00:04:30,440 --> 00:04:32,350
+The type of classifier
+we'll start with
+
+133
+00:04:32,350 --> 00:04:34,029
+is called a decision tree.
+
+134
+00:04:34,029 --> 00:04:35,449
+We'll dive into
+the details of how
+
+135
+00:04:35,449 --> 00:04:37,110
+these work in a future episode.
+
+136
+00:04:37,110 --> 00:04:41,269
+But for now, it's OK to think of
+a classifier as a box of rules.
+
+137
+00:04:41,269 --> 00:04:43,880
+That's because there are many
+different types of classifier,
+
+138
+00:04:43,880 --> 00:04:47,740
+but the input and output
+type is always the same.
+
+139
+00:04:47,740 --> 00:04:49,170
+I'm going to import the tree.
+
+140
+00:04:49,170 --> 00:04:52,000
+Then on line four of our script,
+we'll create the classifier.
+
+141
+00:04:52,000 --> 00:04:54,459
+At this point, it's just
+an empty box of rules.
+
+142
+00:04:54,459 --> 00:04:56,829
+It doesn't know anything
+about apples and oranges yet.
+
+143
+00:04:56,829 --> 00:04:58,870
+To train it, we'll need
+a learning algorithm.
+
+144
+00:04:58,870 --> 00:05:00,307
+If a classifier
+is a box of rules,
+
+145
+00:05:00,307 --> 00:05:02,139
+then you can think of
+the learning algorithm
+
+146
+00:05:02,139 --> 00:05:04,170
+as the procedure
+that creates them.
+
+147
+00:05:04,170 --> 00:05:06,937
+It does that by finding
+patterns in your training data.
+
+148
+00:05:06,937 --> 00:05:09,269
+For example, it might notice
+oranges tend to weigh more,
+
+149
+00:05:09,269 --> 00:05:11,920
+so it'll create a rule saying
+that the heavier fruit is,
+
+150
+00:05:11,920 --> 00:05:14,269
+the more likely it
+is to be an orange.
+
+151
+00:05:14,269 --> 00:05:16,130
+In scikit, the
+training algorithm
+
+152
+00:05:16,130 --> 00:05:19,315
+is included in the classifier
+object, and it's called Fit.
+
+153
+00:05:19,315 --> 00:05:21,899
+You can think of Fit as being
+a synonym for "find patterns
+
+154
+00:05:21,899 --> 00:05:23,136
+in data."
+
+155
+00:05:23,136 --> 00:05:24,509
+We'll get into
+the details of how
+
+156
+00:05:24,509 --> 00:05:27,040
+this happens under the
+hood in a future episode.
+
+157
+00:05:27,040 --> 00:05:29,100
+At this point, we have
+a trained classifier.
+
+158
+00:05:29,100 --> 00:05:32,860
+So let's take it for a spin and
+use it to classify a new fruit.
+
+159
+00:05:32,860 --> 00:05:36,036
+The input to the classifier is
+the features for a new example.
+
+160
+00:05:36,036 --> 00:05:37,660
+Let's say the fruit
+we want to classify
+
+161
+00:05:37,660 --> 00:05:39,750
+is 150 grams and bumpy.
+
+162
+00:05:39,750 --> 00:05:43,870
+The output will be 0 if it's an
+apple or 1 if it's an orange.
+
+163
+00:05:43,870 --> 00:05:46,310
+Before we hit Enter and see
+what the classifier predicts,
+
+164
+00:05:46,310 --> 00:05:47,690
+let's think for a sec.
+
+165
+00:05:47,690 --> 00:05:51,160
+If you had to guess, what would
+you say the output should be?
+
+166
+00:05:51,160 --> 00:05:53,980
+To figure that out, compare
+this fruit to our training data.
+
+167
+00:05:53,980 --> 00:05:55,630
+It looks like it's
+similar to an orange
+
+168
+00:05:55,630 --> 00:05:57,076
+because it's heavy and bumpy.
+
+169
+00:05:57,076 --> 00:05:59,160
+That's what I'd guess
+anyway, and if we hit Enter,
+
+170
+00:05:59,160 --> 00:06:01,834
+it's what our classifier
+predicts as well.
+
+171
+00:06:01,834 --> 00:06:03,250
+If everything
+worked for you, then
+
+172
+00:06:03,250 --> 00:06:06,050
+that's it for your first
+Machine Learning program.
+
+173
+00:06:06,050 --> 00:06:08,680
+You can create a new
+classifier for a new problem
+
+174
+00:06:08,680 --> 00:06:10,769
+just by changing
+the training data.
+
+175
+00:06:10,769 --> 00:06:13,009
+That makes this approach
+far more reusable
+
+176
+00:06:13,009 --> 00:06:15,101
+than writing new rules
+for each problem.
+
+177
+00:06:15,101 --> 00:06:17,350
+Now, you might be wondering
+why we described our fruit
+
+178
+00:06:17,350 --> 00:06:19,790
+using a table of features
+instead of using pictures
+
+179
+00:06:19,790 --> 00:06:21,759
+of the fruit as training data.
+
+180
+00:06:21,759 --> 00:06:23,360
+Well, you can use
+pictures, and we'll
+
+181
+00:06:23,360 --> 00:06:25,120
+get to that in a future episode.
+
+182
+00:06:25,120 --> 00:06:27,279
+But, as you'll see later
+on, the way we did it here
+
+183
+00:06:27,279 --> 00:06:29,002
+is more general.
+
+184
+00:06:29,002 --> 00:06:30,959
+The neat thing is that
+programming with Machine
+
+185
+00:06:30,959 --> 00:06:32,028
+Learning isn't hard.
+
+186
+00:06:32,028 --> 00:06:33,819
+But to get it right,
+you need to understand
+
+187
+00:06:33,819 --> 00:06:35,406
+a few important concepts.
+
+188
+00:06:35,406 --> 00:06:37,990
+I'll start walking you through
+those in the next few episodes.
+
+189
+00:06:37,990 --> 00:06:40,197
+Thanks very much for watching,
+and I'll see you then.
+
+190
+00:06:40,197 --> 00:06:43,850
+[MUSIC PLAYING]
+
+191
+00:06:43,850 --> 00:06:52,000
+ Subtitles End: mo.dbxdb.com
+
