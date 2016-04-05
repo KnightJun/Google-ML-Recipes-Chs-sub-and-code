@@ -146,45 +146,40 @@ So that's the state-of-the-art.
 
 37
 00:01:12,774 --> 00:01:15,190
-Imagine I asked you to write
-a program that takes an image
+想象一下我叫你写一个程序，
+以图像文件作为输入
 
 38
 00:01:15,190 --> 00:01:17,069
-file as input,
-does some analysis,
+对其进行一些分析
 
 39
 00:01:17,069 --> 00:01:18,650
-and outputs the types of fruit.
+然后输出水果的类别
 
 40
 00:01:18,650 --> 00:01:20,040
-How can you solve this?
+你能解决这个问题吗？
 
 41
 00:01:20,040 --> 00:01:22,526
-You'd have to start by
-writing lots of manual rules.
+你得开始写很多特定的规则
 
 42
 00:01:22,526 --> 00:01:23,900
-For example, you
-could write code
+例如你可以编写代码来统计
 
 43
 00:01:23,900 --> 00:01:26,316
-to count how many orange pixels
-there are and compare that
+橙色像素的数量然后和绿色像素
 
 44
 00:01:26,316 --> 00:01:27,569
-to the number of green ones.
+的数量作为比较
 
 45
 00:01:27,569 --> 00:01:30,920
-The ratio should give you a
-hint about the type of fruit.
+这个比例能给你水果种类的提示
 
 46
 00:01:30,920 --> 00:01:33,043
