@@ -85,7 +85,7 @@ scikit-learn和TensorFlow.
 
 22
 00:00:41,780 --> 00:00:45,340
-程序而不是对每个问题都写一个
+程序而不是对每个问题都写一个不同的程序
 
 23
 00:00:45,340 --> 00:00:47,460
@@ -98,13 +98,11 @@ in the World Go Championship.
 
 25
 00:00:50,150 --> 00:00:53,740
-But similar software can also
-learn to play Atari games.
+但是类似的程序也能学会玩Atari游戏
 
 26
 00:00:53,740 --> 00:00:55,956
-Machine Learning is what
-makes that possible.
+机器学习能把这一切变成可能
 
 27
 00:00:55,956 --> 00:00:57,330
