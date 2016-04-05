@@ -122,31 +122,27 @@ So that's the state-of-the-art.
 
 31
 00:01:02,200 --> 00:01:03,750
-But here's a much
-simpler example
+但是我们今天写的是
 
 32
 00:01:03,750 --> 00:01:05,632
-we'll start coding up today.
+一个非常简单的例子
 
 33
 00:01:05,632 --> 00:01:07,590
-I'll give you a problem
-that sounds easy but is
+我会给你一个听起来很简单的问题
 
 34
 00:01:07,590 --> 00:01:09,662
-impossible to solve
-without Machine Learning.
+但是不靠机器学习是解决不了的
 
 35
 00:01:09,662 --> 00:01:11,370
-Can you write code to
-tell the difference
+你能够写代码来分辨出
 
 36
 00:01:11,370 --> 00:01:12,774
-between an apple and an orange?
+苹果和橙子的不同之处吗？
 
 37
 00:01:12,774 --> 00:01:15,190
