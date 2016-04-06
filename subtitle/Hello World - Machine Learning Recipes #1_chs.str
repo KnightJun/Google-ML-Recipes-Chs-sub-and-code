@@ -294,57 +294,49 @@ the problem you want to solve.
 
 73
 00:02:29,319 --> 00:02:31,620
-To code this up, we'll
-work with scikit-learn.
+为了用代码实现它，
+我们将要使用scikit-learn库
 
 74
 00:02:31,620 --> 00:02:34,094
-Here, I'll download and
-install the library.
+现在，我即将下载这个库
 
 75
 00:02:34,094 --> 00:02:35,970
-There are a couple
-different ways to do that.
+有好几种方法去下载它
 
 76
 00:02:35,970 --> 00:02:38,241
-But for me, the easiest
-has been to use Anaconda.
+但对我来说最简单的就是Anaconda.
 
 77
 00:02:38,241 --> 00:02:40,449
-This makes it easy to get
-all the dependencies set up
+Anaconda十分方便的为我们安装完
+所有依赖的组件
 
 78
 00:02:40,449 --> 00:02:42,440
-and works well cross-platform.
+而且还是跨平台的
 
 79
 00:02:42,440 --> 00:02:44,190
-With the magic of
-video, I'll fast forward
+时间关系，下载和安装的部分
 
 80
 00:02:44,190 --> 00:02:45,776
-through downloading
-and installing it.
+被跳过了
 
 81
 00:02:45,776 --> 00:02:47,150
-Once it's installed,
-you can test
+安装完后你可以测试一下
 
 82
 00:02:47,150 --> 00:02:48,608
-that everything is
-working properly
+看看是否能正常使用
 
 83
 00:02:48,608 --> 00:02:51,364
-by starting a Python script
-and importing SK learn.
+新建一个python脚本，然后载入SK learn库
 
 84
 00:02:51,364 --> 00:02:53,780
