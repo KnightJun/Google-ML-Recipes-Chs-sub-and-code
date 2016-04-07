@@ -337,514 +337,432 @@ Anaconda十分方便的为我们安装完
 
 84
 00:02:51,364 --> 00:02:53,780
-Assuming that worked, that's
-line one of our program down,
+如果没有错误，那这就是我们的第一行代码
 
 85
 00:02:53,780 --> 00:02:56,145
-five to go.
+还剩五行而已了
 
 86
 00:02:56,145 --> 00:02:57,520
-To use supervised
-learning, we'll
+对于有监督学习, 我们会遵循
 
 87
 00:02:57,520 --> 00:03:00,280
-follow a recipe with
-a few standard steps.
+一些固定的步骤
 
 88
 00:03:00,280 --> 00:03:02,340
-Step one is to
-collect training data.
+第一步是收集训练数据
 
 89
 00:03:02,340 --> 00:03:04,789
-These are examples of the
-problem we want to solve.
+这是我们要解决的问题的一些样例
 
 90
 00:03:04,789 --> 00:03:06,789
-For our problem, we're
-going to write a function
+我们的目标是编写一个函数
 
 91
 00:03:06,789 --> 00:03:08,002
-to classify a piece of fruit.
+对一些水果进行分类
 
 92
 00:03:08,002 --> 00:03:10,210
-For starters, it will take
-a description of the fruit
+一开始输入一个水果的描述然后判断
 
 93
 00:03:10,210 --> 00:03:11,680
-as input and
-predict whether it's
+这是苹果还是橙子并输出所属类别
 
 94
 00:03:11,680 --> 00:03:14,349
-an apple or an orange as
-output, based on features
+判断的依据是水果的特征
 
 95
 00:03:14,349 --> 00:03:16,310
-like its weight and texture.
+比如重量(Weight)和质感(Texture)
 
 96
 00:03:16,310 --> 00:03:18,160
-To collect our
-training data, imagine
+为了收集我们的训练数据，
 
 97
 00:03:18,160 --> 00:03:19,310
-we head out to an orchard.
+想象我们去一个果园
 
 98
 00:03:19,310 --> 00:03:21,060
-We'll look at different
-apples and oranges
+我们观察不同的苹果和橙子
 
 99
 00:03:21,060 --> 00:03:23,627
-and write down measurements
-that describe them in a table.
+然后在表格中写下观察度量的结果描述
 
 100
 00:03:23,627 --> 00:03:25,210
-In Machine Learning
-these measurements
+在机器学习中，这些度量的结果
 
 101
 00:03:25,210 --> 00:03:26,650
-are called features.
+被称为特征(Features)
 
 102
 00:03:26,650 --> 00:03:28,970
-To keep things simple,
-here we've used just two--
+为了简化问题，在此我们仅使用两种特征：
 
 103
 00:03:28,970 --> 00:03:31,650
-how much each fruit weighs in
-grams and its texture, which
+每个水果重多少克和水果的质地,
 
 104
 00:03:31,650 --> 00:03:33,830
-can be bumpy or smooth.
+比如说粗糙(bumpy)或光滑(smooth)
 
 105
 00:03:33,830 --> 00:03:35,860
-A good feature makes
-it easy to discriminate
+一种好的特征能更容易地
 
 106
 00:03:35,860 --> 00:03:37,960
-between different
-types of fruit.
+区分出水果种类的不同之处
 
 107
 00:03:37,960 --> 00:03:40,210
-Each row in our training
-data is an example.
+每一行训练数据都是一个样本数据
 
 108
 00:03:40,210 --> 00:03:42,259
-It describes one piece of fruit.
+每一个样本数据描述了一个水果
 
 109
 00:03:42,259 --> 00:03:44,240
-The last column is
-called the label.
+最后一列数据是标签(label).
 
 110
 00:03:44,240 --> 00:03:46,257
-It identifies what type
-of fruit is in each row,
+其定义了每一行数据是哪一种水果
 
 111
 00:03:46,257 --> 00:03:47,840
-and there are just
-two possibilities--
+这里只有两种可能：
 
 112
 00:03:47,840 --> 00:03:49,430
-apples and oranges.
+苹果和橙子
 
 113
 00:03:49,430 --> 00:03:51,560
-The whole table is
-our training data.
+这整个表格就是训练数据(training data)
 
 114
 00:03:51,560 --> 00:03:53,069
-Think of these as
-all the examples
+我们想分类器从这所有的样本数据
 
 115
 00:03:53,069 --> 00:03:55,120
-we want the classifier
-to learn from.
+中学习规则
 
 116
 00:03:55,120 --> 00:03:57,660
-The more training data you
-have, the better a classifier
+如果你拥有更多的数据，你就能
 
 117
 00:03:57,660 --> 00:03:59,310
-you can create.
+创建更好的分类器
 
 118
 00:03:59,310 --> 00:04:01,620
-Now let's write down our
-training data in code.
+现在让我们在代码里写下训练数据
 
 119
 00:04:01,620 --> 00:04:04,150
-We'll use two variables--
-features and labels.
+我们使用两个变量：
+features 和 labels.
 
 120
 00:04:04,150 --> 00:04:06,060
-Features contains the
-first two columns,
+Features包括头两列数据,
 
 121
 00:04:06,060 --> 00:04:07,887
-and labels contains the last.
+labels包括最后一列数据.
 
 122
 00:04:07,887 --> 00:04:09,470
-You can think of
-features as the input
+你可以把这当作以特征作为分类器的输入
 
 123
 00:04:09,470 --> 00:04:13,401
-to the classifier and labels
-as the output we want.
+然后输出我们想要的标签
 
 124
 00:04:13,401 --> 00:04:15,650
-I'm going to change the
-variable types of all features
+我要把所有特征的数据类型由
 
 125
 00:04:15,650 --> 00:04:18,980
-to ints instead of strings,
-so I'll use 0 for bumpy and 1
+字符串(strings)改为整数(ints)
+因此我用0代表粗糙(bumpy)，
 
 126
 00:04:18,980 --> 00:04:19,937
-for smooth.
+1代表光滑
 
 127
 00:04:19,937 --> 00:04:22,269
-I'll do the same for our
-labels, so I'll use 0 for apple
+我还要对labels变量做同样的事：
+用0代表苹果，
 
 128
 00:04:22,269 --> 00:04:23,740
-and 1 for orange.
+1代表橙子
 
 129
 00:04:23,740 --> 00:04:26,300
-These are lines two and
-three in our program.
+这是我们程序的第二和第三行
 
 130
 00:04:26,300 --> 00:04:29,160
-Step two in our recipes to
-use these examples to train
+第二步就是使用这些样本来训练
 
 131
 00:04:29,160 --> 00:04:30,440
-a classifier.
+一个分类器
 
 132
 00:04:30,440 --> 00:04:32,350
-The type of classifier
-we'll start with
+我们的第一个分类器的类型是
 
 133
 00:04:32,350 --> 00:04:34,029
-is called a decision tree.
+决策树（decision tree）
 
 134
 00:04:34,029 --> 00:04:35,449
-We'll dive into
-the details of how
+我们以后会深入了解
 
 135
 00:04:35,449 --> 00:04:37,110
-these work in a future episode.
+它是怎样工作的
 
 136
 00:04:37,110 --> 00:04:41,269
-But for now, it's OK to think of
-a classifier as a box of rules.
+但是现在你可以把分类器当成
+一个内置各种规则的黑盒子
 
 137
 00:04:41,269 --> 00:04:43,880
-That's because there are many
-different types of classifier,
+因为分类器有许多种
 
 138
 00:04:43,880 --> 00:04:47,740
-but the input and output
-type is always the same.
+但输入和输出基本都是相似的
 
 139
 00:04:47,740 --> 00:04:49,170
-I'm going to import the tree.
+我现在就来载入决策树
 
 140
 00:04:49,170 --> 00:04:52,000
-Then on line four of our script,
-we'll create the classifier.
+在脚本的第四行我们就创建了一个分类器
 
 141
 00:04:52,000 --> 00:04:54,459
-At this point, it's just
-an empty box of rules.
+这时候这个黑盒子里面还没有规则
 
 142
 00:04:54,459 --> 00:04:56,829
-It doesn't know anything
-about apples and oranges yet.
+它还不知道苹果和橙子的任何信息
 
 143
 00:04:56,829 --> 00:04:58,870
-To train it, we'll need
-a learning algorithm.
+为了训练它我们需要一个学习算法
 
 144
 00:04:58,870 --> 00:05:00,307
-If a classifier
-is a box of rules,
+如果分类器是内置规则的黑盒子
 
 145
 00:05:00,307 --> 00:05:02,139
-then you can think of
-the learning algorithm
+那你可以把学习算法当作
 
 146
 00:05:02,139 --> 00:05:04,170
-as the procedure
-that creates them.
+通过在你的训练数据中寻找特定的模式
 
 147
 00:05:04,170 --> 00:05:06,937
-It does that by finding
-patterns in your training data.
+来产生规则的程序
 
 148
 00:05:06,937 --> 00:05:09,269
-For example, it might notice
-oranges tend to weigh more,
+例如，它会注意到橙子要更重一些
 
 149
 00:05:09,269 --> 00:05:11,920
-so it'll create a rule saying
-that the heavier fruit is,
+所以它会建立一条规则：更重的水果
 
 150
 00:05:11,920 --> 00:05:14,269
-the more likely it
-is to be an orange.
+更有可能是橙子
 
 151
 00:05:14,269 --> 00:05:16,130
-In scikit, the
-training algorithm
+在scikit库, 训练算法在
 
 152
 00:05:16,130 --> 00:05:19,315
-is included in the classifier
-object, and it's called Fit.
+分类器的类中，叫做Fit
 
 153
 00:05:19,315 --> 00:05:21,899
-You can think of Fit as being
-a synonym for "find patterns
+你可以认为Fit等同于
 
 154
 00:05:21,899 --> 00:05:23,136
-in data."
+“在数据中找模式”
 
 155
 00:05:23,136 --> 00:05:24,509
-We'll get into
-the details of how
+在以后我们会了解到
 
 156
 00:05:24,509 --> 00:05:27,040
-this happens under the
-hood in a future episode.
+这个算法工作的细节
 
 157
 00:05:27,040 --> 00:05:29,100
-At this point, we have
-a trained classifier.
+现在，我们有一个训练好的分类器
 
 158
 00:05:29,100 --> 00:05:32,860
-So let's take it for a spin and
-use it to classify a new fruit.
+让我们用它来分类一个新的水果样本
 
 159
 00:05:32,860 --> 00:05:36,036
-The input to the classifier is
-the features for a new example.
+输入分类器的是一个新样本的特征
 
 160
 00:05:36,036 --> 00:05:37,660
-Let's say the fruit
-we want to classify
+这表示我们想要进行分类的水果是
 
 161
 00:05:37,660 --> 00:05:39,750
-is 150 grams and bumpy.
+150克和粗糙的
 
 162
 00:05:39,750 --> 00:05:43,870
-The output will be 0 if it's an
-apple or 1 if it's an orange.
+输出0代表苹果，输出1代表橙子
 
 163
 00:05:43,870 --> 00:05:46,310
-Before we hit Enter and see
-what the classifier predicts,
+在我们按下回车查看分类结果之前
 
 164
 00:05:46,310 --> 00:05:47,690
-let's think for a sec.
+让我们来想一想
 
 165
 00:05:47,690 --> 00:05:51,160
-If you had to guess, what would
-you say the output should be?
+如果让你来猜，你认为会输出什么
 
 166
 00:05:51,160 --> 00:05:53,980
-To figure that out, compare
-this fruit to our training data.
+为了解决这个问题，我们来对比训练数据
 
 167
 00:05:53,980 --> 00:05:55,630
-It looks like it's
-similar to an orange
+这看起来更像一个橙子
 
 168
 00:05:55,630 --> 00:05:57,076
-because it's heavy and bumpy.
+因为它重而且粗糙
 
 169
 00:05:57,076 --> 00:05:59,160
-That's what I'd guess
-anyway, and if we hit Enter,
+这只是我的猜测，让我们按下回车
 
 170
 00:05:59,160 --> 00:06:01,834
-it's what our classifier
-predicts as well.
+发现我们的分类器分类结果是一样的
 
 171
 00:06:01,834 --> 00:06:03,250
-If everything
-worked for you, then
+如果你能完成这个程序，
 
 172
 00:06:03,250 --> 00:06:06,050
-that's it for your first
-Machine Learning program.
+那这就是你第一个机器学习程序
 
 173
 00:06:06,050 --> 00:06:08,680
-You can create a new
-classifier for a new problem
+你可以为另外一种问题再建立一个分类器
 
 174
 00:06:08,680 --> 00:06:10,769
-just by changing
-the training data.
+仅仅需要改变训练数据
 
 175
 00:06:10,769 --> 00:06:13,009
-That makes this approach
-far more reusable
+这使得这种方法比为了每个问题
 
 176
 00:06:13,009 --> 00:06:15,101
-than writing new rules
-for each problem.
+写一个新的规则更加可重复使用
 
 177
 00:06:15,101 --> 00:06:17,350
-Now, you might be wondering
-why we described our fruit
+现在，你也许想知道为什么我们用
 
 178
 00:06:17,350 --> 00:06:19,790
-using a table of features
-instead of using pictures
+一个表格而不是图像来描述水果
 
 179
 00:06:19,790 --> 00:06:21,759
-of the fruit as training data.
+并作为训练数据
 
 180
 00:06:21,759 --> 00:06:23,360
-Well, you can use
-pictures, and we'll
+当然了，你可以使用图片，这个
 
 181
 00:06:23,360 --> 00:06:25,120
-get to that in a future episode.
+会在以后的视频中会学习到
 
 182
 00:06:25,120 --> 00:06:27,279
-But, as you'll see later
-on, the way we did it here
+但是，你接下来会看到
 
 183
 00:06:27,279 --> 00:06:29,002
-is more general.
+我们现在使用的方法更普遍
 
 184
 00:06:29,002 --> 00:06:30,959
-The neat thing is that
-programming with Machine
+你要明白的事情是
 
 185
 00:06:30,959 --> 00:06:32,028
-Learning isn't hard.
+写一个机器学习的程序并不难
 
 186
 00:06:32,028 --> 00:06:33,819
-But to get it right,
-you need to understand
+但是要让它正确地工作，你需要
 
 187
 00:06:33,819 --> 00:06:35,406
-a few important concepts.
+明白一些重要的概念
 
 188
 00:06:35,406 --> 00:06:37,990
-I'll start walking you through
-those in the next few episodes.
+接下来的几集视频我会跟你讲解这些
 
 189
 00:06:37,990 --> 00:06:40,197
-Thanks very much for watching,
-and I'll see you then.
+非常感谢你的观看，我们很快会再见的
 
 190
 00:06:40,197 --> 00:06:43,850
-[MUSIC PLAYING]
-
-191
-00:06:43,850 --> 00:06:52,000
- Subtitles End: mo.dbxdb.com
-
+[中文字幕：KnightJun 来源：Google Developers]
