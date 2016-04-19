@@ -1,0 +1,830 @@
+1
+00:00:00,000 --> 00:00:00,000
+Youtube subtitles download by mo.dbxdb.com 
+
+2
+00:00:00,000 --> 00:00:02,802
+[MUSIC PLAYING]
+
+3
+00:00:02,802 --> 00:00:06,550
+
+
+4
+00:00:06,550 --> 00:00:09,370
+Last episode, we used a
+decision tree as our classifier.
+
+5
+00:00:09,370 --> 00:00:10,920
+Today we'll add
+code to visualize it
+
+6
+00:00:10,920 --> 00:00:13,032
+so we can see how it
+works under the hood.
+
+7
+00:00:13,032 --> 00:00:14,490
+There are many
+types of classifiers
+
+8
+00:00:14,490 --> 00:00:16,740
+you may have heard of before--
+things like neural nets
+
+9
+00:00:16,740 --> 00:00:17,870
+or support vector machines.
+
+10
+00:00:17,870 --> 00:00:20,234
+So why did we use a
+decision tree to start?
+
+11
+00:00:20,234 --> 00:00:21,900
+Well, they have a
+very unique property--
+
+12
+00:00:21,900 --> 00:00:23,907
+they're easy to
+read and understand.
+
+13
+00:00:23,907 --> 00:00:26,490
+In fact, they're one of the few
+models that are interpretable,
+
+14
+00:00:26,490 --> 00:00:28,900
+where you can understand
+exactly why the classifier makes
+
+15
+00:00:28,900 --> 00:00:29,740
+a decision.
+
+16
+00:00:29,740 --> 00:00:33,534
+That's amazingly
+useful in practice.
+
+17
+00:00:33,534 --> 00:00:34,950
+To get started,
+I'll introduce you
+
+18
+00:00:34,950 --> 00:00:37,079
+to a real data set
+we'll work with today.
+
+19
+00:00:37,079 --> 00:00:38,670
+It's called Iris.
+
+20
+00:00:38,670 --> 00:00:41,170
+Iris is a classic
+machine learning problem.
+
+21
+00:00:41,170 --> 00:00:43,270
+In it, you want to identify
+what type of flower
+
+22
+00:00:43,270 --> 00:00:45,009
+you have based on
+different measurements,
+
+23
+00:00:45,009 --> 00:00:46,980
+like the length and
+width of the petal.
+
+24
+00:00:46,980 --> 00:00:49,600
+The data set includes three
+different types of flowers.
+
+25
+00:00:49,600 --> 00:00:52,870
+They're all species of
+iris-- setosa, versicolor,
+
+26
+00:00:52,870 --> 00:00:53,966
+and virginica.
+
+27
+00:00:53,966 --> 00:00:55,340
+Scrolling down,
+you can see we're
+
+28
+00:00:55,340 --> 00:01:00,024
+given 50 examples of each
+type, so 150 examples total.
+
+29
+00:01:00,024 --> 00:01:01,650
+Notice there are four
+features that are
+
+30
+00:01:01,650 --> 00:01:03,620
+used to describe each example.
+
+31
+00:01:03,620 --> 00:01:06,670
+These are the length and
+width of the sepal and petal.
+
+32
+00:01:06,670 --> 00:01:08,730
+And just like in our
+apples and oranges problem,
+
+33
+00:01:08,730 --> 00:01:11,780
+the first four columns give the
+features and the last column
+
+34
+00:01:11,780 --> 00:01:15,170
+gives the labels, which is the
+type of flower in each row.
+
+35
+00:01:15,170 --> 00:01:18,140
+Our goal is to use this data
+set to train a classifier.
+
+36
+00:01:18,140 --> 00:01:21,027
+Then we can use that classifier
+to predict what species
+
+37
+00:01:21,027 --> 00:01:23,610
+of flower we have if we're given
+a new flower that we've never
+
+38
+00:01:23,610 --> 00:01:25,036
+seen before.
+
+39
+00:01:25,036 --> 00:01:26,910
+Knowing how to work with
+an existing data set
+
+40
+00:01:26,910 --> 00:01:29,910
+is a good skill, so let's
+import Iris into scikit-learn
+
+41
+00:01:29,910 --> 00:01:32,120
+and see what it
+looks like in code.
+
+42
+00:01:32,120 --> 00:01:33,870
+Conveniently, the
+friendly folks at scikit
+
+43
+00:01:33,870 --> 00:01:35,770
+provided a bunch of
+sample data sets,
+
+44
+00:01:35,770 --> 00:01:37,780
+including Iris, as
+well as utilities
+
+45
+00:01:37,780 --> 00:01:39,760
+to make them easy to import.
+
+46
+00:01:39,760 --> 00:01:42,690
+We can import Iris into
+our code like this.
+
+47
+00:01:42,690 --> 00:01:44,530
+The data set includes
+both the table
+
+48
+00:01:44,530 --> 00:01:47,230
+from Wikipedia as
+well as some metadata.
+
+49
+00:01:47,230 --> 00:01:49,630
+The metadata tells you
+the names of the features
+
+50
+00:01:49,630 --> 00:01:52,430
+and the names of different
+types of flowers.
+
+51
+00:01:52,430 --> 00:01:54,190
+The features and
+examples themselves
+
+52
+00:01:54,190 --> 00:01:56,300
+are contained in
+the data variable.
+
+53
+00:01:56,300 --> 00:01:58,239
+For example, if I print
+out the first entry,
+
+54
+00:01:58,239 --> 00:02:00,920
+you can see the measurements
+for this flower.
+
+55
+00:02:00,920 --> 00:02:03,819
+These index to the feature
+names, so the first value
+
+56
+00:02:03,819 --> 00:02:06,760
+refers to the sepal length,
+and the second to sepal width,
+
+57
+00:02:06,760 --> 00:02:09,150
+and so on.
+
+58
+00:02:09,150 --> 00:02:11,750
+The target variable
+contains the labels.
+
+59
+00:02:11,750 --> 00:02:14,690
+Likewise, these index
+to the target names.
+
+60
+00:02:14,690 --> 00:02:16,000
+Let's print out the first one.
+
+61
+00:02:16,000 --> 00:02:19,229
+A label of 0 means
+it's a setosa.
+
+62
+00:02:19,229 --> 00:02:21,449
+If you look at the
+table from Wikipedia,
+
+63
+00:02:21,449 --> 00:02:24,520
+you'll notice that we just
+printed out the first row.
+
+64
+00:02:24,520 --> 00:02:27,967
+Now both the data and target
+variables have 150 entries.
+
+65
+00:02:27,967 --> 00:02:29,550
+If you want, you can
+iterate over them
+
+66
+00:02:29,550 --> 00:02:32,081
+to print out the entire
+data set like this.
+
+67
+00:02:32,081 --> 00:02:34,039
+Now that we know how to
+work with the data set,
+
+68
+00:02:34,039 --> 00:02:35,849
+we're ready to
+train a classifier.
+
+69
+00:02:35,849 --> 00:02:39,300
+But before we do that, first
+we need to split up the data.
+
+70
+00:02:39,300 --> 00:02:41,440
+I'm going to remove
+several of the examples
+
+71
+00:02:41,440 --> 00:02:43,479
+and put them aside for later.
+
+72
+00:02:43,479 --> 00:02:46,330
+We'll call the examples I'm
+putting aside our testing data.
+
+73
+00:02:46,330 --> 00:02:48,780
+We'll keep these separate
+from our training data,
+
+74
+00:02:48,780 --> 00:02:50,940
+and later on we'll use
+our testing examples
+
+75
+00:02:50,940 --> 00:02:53,389
+to test how accurate
+the classifier is
+
+76
+00:02:53,389 --> 00:02:55,679
+on data it's never seen before.
+
+77
+00:02:55,679 --> 00:02:57,470
+Testing is actually a
+really important part
+
+78
+00:02:57,470 --> 00:02:59,261
+of doing machine learning
+well in practice,
+
+79
+00:02:59,261 --> 00:03:02,280
+and we'll cover it in more
+detail in a future episode.
+
+80
+00:03:02,280 --> 00:03:04,710
+Just for this exercise,
+I'll remove one example
+
+81
+00:03:04,710 --> 00:03:06,050
+of each type of flower.
+
+82
+00:03:06,050 --> 00:03:07,520
+And as it happens,
+the data set is
+
+83
+00:03:07,520 --> 00:03:10,009
+ordered so the first
+setosa is at index 0,
+
+84
+00:03:10,009 --> 00:03:14,270
+and the first versicolor
+is at 50, and so on.
+
+85
+00:03:14,270 --> 00:03:16,770
+The syntax looks a little bit
+complicated, but all I'm doing
+
+86
+00:03:16,770 --> 00:03:21,229
+is removing three entries from
+the data and target variables.
+
+87
+00:03:21,229 --> 00:03:24,080
+Then I'll create two new
+sets of variables-- one
+
+88
+00:03:24,080 --> 00:03:26,586
+for training and
+one for testing.
+
+89
+00:03:26,586 --> 00:03:28,419
+Training will have the
+majority of our data,
+
+90
+00:03:28,419 --> 00:03:31,370
+and testing will have just
+the examples I removed.
+
+91
+00:03:31,370 --> 00:03:33,830
+Now, just as before, we
+can create a decision tree
+
+92
+00:03:33,830 --> 00:03:36,569
+classifier and train it
+on our training data.
+
+93
+00:03:36,569 --> 00:03:40,699
+
+
+94
+00:03:40,699 --> 00:03:42,840
+Before we visualize
+it, let's use the tree
+
+95
+00:03:42,840 --> 00:03:44,960
+to classify our testing data.
+
+96
+00:03:44,960 --> 00:03:47,449
+We know we have one
+flower of each type,
+
+97
+00:03:47,449 --> 00:03:50,180
+and we can print out
+the labels we expect.
+
+98
+00:03:50,180 --> 00:03:52,160
+Now let's see what
+the tree predicts.
+
+99
+00:03:52,160 --> 00:03:54,460
+We'll give it the features
+for our testing data,
+
+100
+00:03:54,460 --> 00:03:56,349
+and we'll get back labels.
+
+101
+00:03:56,349 --> 00:03:59,660
+You can see the predicted
+labels match our testing data.
+
+102
+00:03:59,660 --> 00:04:01,550
+That means it got
+them all right.
+
+103
+00:04:01,550 --> 00:04:04,039
+Now, keep in mind, this
+was a very simple test,
+
+104
+00:04:04,039 --> 00:04:07,940
+and we'll go into more
+detail down the road.
+
+105
+00:04:07,940 --> 00:04:09,819
+Now let's visualize
+the tree so we can
+
+106
+00:04:09,819 --> 00:04:11,762
+see how the classifier works.
+
+107
+00:04:11,762 --> 00:04:13,220
+To do that, I'm
+going to copy-paste
+
+108
+00:04:13,220 --> 00:04:15,220
+some code in from
+scikit's tutorials,
+
+109
+00:04:15,220 --> 00:04:16,994
+and because this code
+is for visualization
+
+110
+00:04:16,994 --> 00:04:18,410
+and not machine-learning
+concepts,
+
+111
+00:04:18,410 --> 00:04:20,380
+I won't cover the details here.
+
+112
+00:04:20,380 --> 00:04:22,759
+Note that I'm combining the
+code from these two examples
+
+113
+00:04:22,759 --> 00:04:26,329
+to create an easy-to-read PDF.
+
+114
+00:04:26,329 --> 00:04:28,440
+I can run our script
+and open up the PDF,
+
+115
+00:04:28,440 --> 00:04:30,120
+and we can see the tree.
+
+116
+00:04:30,120 --> 00:04:33,810
+To use it to classify data, you
+start by reading from the top.
+
+117
+00:04:33,810 --> 00:04:35,829
+Each node asks a
+yes or no question
+
+118
+00:04:35,829 --> 00:04:37,504
+about one of the features.
+
+119
+00:04:37,504 --> 00:04:39,420
+For example, this node
+asks if the pedal width
+
+120
+00:04:39,420 --> 00:04:41,420
+is less than 0.8 centimeters.
+
+121
+00:04:41,420 --> 00:04:44,199
+If it's true for the example
+you're classifying, go left.
+
+122
+00:04:44,199 --> 00:04:46,170
+Otherwise, go right.
+
+123
+00:04:46,170 --> 00:04:48,589
+Now let's use this tree
+to classify an example
+
+124
+00:04:48,589 --> 00:04:50,130
+from our testing data.
+
+125
+00:04:50,130 --> 00:04:53,233
+Here are the features and label
+for our first testing flower.
+
+126
+00:04:53,233 --> 00:04:54,899
+Remember, you can
+find the feature names
+
+127
+00:04:54,899 --> 00:04:56,579
+by looking at the metadata.
+
+128
+00:04:56,579 --> 00:04:58,980
+We know this flower is
+a setosa, so let's see
+
+129
+00:04:58,980 --> 00:05:00,779
+what the tree predicts.
+
+130
+00:05:00,779 --> 00:05:03,290
+I'll resize the windows to
+make this easier to see.
+
+131
+00:05:03,290 --> 00:05:04,889
+And the first
+question the tree asks
+
+132
+00:05:04,889 --> 00:05:08,110
+is whether the petal width
+is less than 0.8 centimeters.
+
+133
+00:05:08,110 --> 00:05:09,540
+That's the fourth feature.
+
+134
+00:05:09,540 --> 00:05:11,709
+The answer is true,
+so we proceed left.
+
+135
+00:05:11,709 --> 00:05:14,149
+At this point, we're
+already at a leaf node.
+
+136
+00:05:14,149 --> 00:05:15,860
+There are no other
+questions to ask,
+
+137
+00:05:15,860 --> 00:05:18,490
+so the tree gives us
+a prediction, setosa,
+
+138
+00:05:18,490 --> 00:05:19,440
+and it's right.
+
+139
+00:05:19,440 --> 00:05:23,329
+Notice the label is 0, which
+indexes to that type of flower.
+
+140
+00:05:23,329 --> 00:05:25,930
+Now let's try our
+second testing example.
+
+141
+00:05:25,930 --> 00:05:27,319
+This one is a versicolor.
+
+142
+00:05:27,319 --> 00:05:29,329
+Let's see what
+the tree predicts.
+
+143
+00:05:29,329 --> 00:05:31,839
+Again we read from the top,
+and this time the pedal width
+
+144
+00:05:31,839 --> 00:05:33,750
+is greater than 0.8 centimeters.
+
+145
+00:05:33,750 --> 00:05:35,839
+The answer to the tree's
+question is false,
+
+146
+00:05:35,839 --> 00:05:36,829
+so we go right.
+
+147
+00:05:36,829 --> 00:05:39,245
+The next question the tree
+asks is whether the pedal width
+
+148
+00:05:39,245 --> 00:05:40,709
+is less than 1.75.
+
+149
+00:05:40,709 --> 00:05:42,410
+It's trying to narrow it down.
+
+150
+00:05:42,410 --> 00:05:44,440
+That's true, so we go left.
+
+151
+00:05:44,440 --> 00:05:47,319
+Now it asks if the pedal
+length is less than 4.95.
+
+152
+00:05:47,319 --> 00:05:49,180
+That's true, so
+we go left again.
+
+153
+00:05:49,180 --> 00:05:51,130
+And finally, the tree
+asks if the pedal width
+
+154
+00:05:51,130 --> 00:05:52,810
+is less than 1.65.
+
+155
+00:05:52,810 --> 00:05:54,300
+That's true, so left it is.
+
+156
+00:05:54,300 --> 00:05:57,029
+And now we have our
+prediction-- it's a versicolor,
+
+157
+00:05:57,029 --> 00:05:58,610
+and that's right again.
+
+158
+00:05:58,610 --> 00:06:01,170
+You can try the last one
+on your own as an exercise.
+
+159
+00:06:01,170 --> 00:06:03,079
+And remember, the way
+we're using the tree
+
+160
+00:06:03,079 --> 00:06:05,607
+is the same way
+it works in code.
+
+161
+00:06:05,607 --> 00:06:07,440
+So that's how you quickly
+visualize and read
+
+162
+00:06:07,440 --> 00:06:08,285
+a decision tree.
+
+163
+00:06:08,285 --> 00:06:09,660
+There's a lot more
+to learn here,
+
+164
+00:06:09,660 --> 00:06:12,720
+especially how they're built
+automatically from examples.
+
+165
+00:06:12,720 --> 00:06:14,620
+We'll get to that
+in a future episode.
+
+166
+00:06:14,620 --> 00:06:17,019
+But for now, let's close
+with an essential point.
+
+167
+00:06:17,019 --> 00:06:19,519
+Every question the tree
+asks must be about one
+
+168
+00:06:19,519 --> 00:06:20,264
+of your features.
+
+169
+00:06:20,264 --> 00:06:22,680
+That means the better your
+features are, the better a tree
+
+170
+00:06:22,680 --> 00:06:23,630
+you can build.
+
+171
+00:06:23,630 --> 00:06:25,300
+And the next episode
+will start looking
+
+172
+00:06:25,300 --> 00:06:26,514
+at what makes a good feature.
+
+173
+00:06:26,514 --> 00:06:28,930
+Thanks very much for watching,
+and I'll see you next time.
+
+174
+00:06:28,930 --> 00:06:31,980
+[MUSIC PLAYING]
+
+175
+00:06:31,980 --> 00:06:41,000
+ Subtitles End: mo.dbxdb.com
+
