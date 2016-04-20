@@ -5,7 +5,8 @@ Google出品的机器学习入门视频的中文字幕翻译与示例代码
   http://pan.baidu.com/s/1boOvdT1 （里面的字幕不一定是最新的，请从这里下载字幕）
 
 ## 在线观看地址： 
-  http://list.youku.com/albumlist/show?id=27105036&ascending=1&page=1
+  https://www.youtube.com/playlist?list=PLOU2XLYxmsIIuiBfYad6rFYQU_jL2ryal （官方地址，最新最清晰，需要翻墙）
+  http://list.youku.com/albumlist/show?id=27105036&ascending=1&page=1 （youku地址，翻译好的字幕我会压制到视频传到这里，不过清晰度差，广告多，建议从百度云下载视频自己加载中文字幕）
 
 ## 参与翻译：
   subtitle/chs目录下是中文字幕，文件名前面的[ing...]是尚未翻译好的字幕，因为有现成的英文字幕，所以不用卡时间轴，直接替换英文就可以了，你可以fork一份修改这个文件然后push到这里，当然你也可以修改翻译好的字幕，换成更好的翻译push过来 
