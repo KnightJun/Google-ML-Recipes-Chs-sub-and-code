@@ -13,3 +13,6 @@ Google出品的机器学习入门视频的中文字幕翻译与示例代码
 
 ## 代码说明：
   代码在PythonCode目录下，使用Python3而不是视频内使用的Python2语法，这两者之间有一点小区别，你可以push你自己的代码到PythonCode里面以帮助其他人学习
+
+## 感谢
+  **sisely** 
