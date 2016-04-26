@@ -12,436 +12,370 @@ Youtube subtitles download by mo.dbxdb.com
 
 4
 00:00:06,550 --> 00:00:09,370
-Last episode, we used a
-decision tree as our classifier.
+上集，我们使用决策树作分类器
+
 
 5
 00:00:09,370 --> 00:00:10,920
-Today we'll add
-code to visualize it
+这集我们将完善代码使其变得可视化
+
 
 6
 00:00:10,920 --> 00:00:13,032
-so we can see how it
-works under the hood.
+这样我们让更容易了解它的工作过程
 
 7
 00:00:13,032 --> 00:00:14,490
-There are many
-types of classifiers
+有许多类型的分类器
 
 8
 00:00:14,490 --> 00:00:16,740
-you may have heard of before--
-things like neural nets
+一些你可能已经听说过――诸如神经网络
 
 9
 00:00:16,740 --> 00:00:17,870
-or support vector machines.
+或支持向量机
 
 10
 00:00:17,870 --> 00:00:20,234
-So why did we use a
-decision tree to start?
+那么为什么我们要从使用决策树开始?
 
 11
 00:00:20,234 --> 00:00:21,900
-Well, they have a
-very unique property--
+其实是因为决策树有个非常特殊的性质
 
 12
 00:00:21,900 --> 00:00:23,907
-they're easy to
-read and understand.
+就是它的可读性很强，易于理解
 
 13
 00:00:23,907 --> 00:00:26,490
-In fact, they're one of the few
-models that are interpretable,
+事实上,它是为数不多的几个可判断的模型之一
 
 14
 00:00:26,490 --> 00:00:28,900
-where you can understand
-exactly why the classifier makes
+这些模型有助于我们理解为何分类器
 
 15
 00:00:28,900 --> 00:00:29,740
-a decision.
+可以做出决策
 
 16
 00:00:29,740 --> 00:00:33,534
-That's amazingly
-useful in practice.
+这是让人觉得惊奇的事，也是在实践中最有用的部分
 
 17
 00:00:33,534 --> 00:00:34,950
-To get started,
-I'll introduce you
+开始前，
+我将介绍一个
 
 18
 00:00:34,950 --> 00:00:37,079
-to a real data set
-we'll work with today.
+今天要用到的数据集
 
 19
 00:00:37,079 --> 00:00:38,670
-It's called Iris.
+叫作Iris.
 
 20
 00:00:38,670 --> 00:00:41,170
-Iris is a classic
-machine learning problem.
+Iris 是一个经典的机器学习问题
 
 21
 00:00:41,170 --> 00:00:43,270
-In it, you want to identify
-what type of flower
+你想要弄清楚某朵花是属于哪一类的
 
 22
 00:00:43,270 --> 00:00:45,009
-you have based on
-different measurements,
+你得根据不同的度量方法
 
 23
 00:00:45,009 --> 00:00:46,980
-like the length and
-width of the petal.
+例如花瓣的长度和宽度
 
 24
 00:00:46,980 --> 00:00:49,600
-The data set includes three
-different types of flowers.
+数据集里包含三种不同种类的花
 
 25
 00:00:49,600 --> 00:00:52,870
-They're all species of
-iris-- setosa, versicolor,
+它们都是鸢尾花的品种--Setosa（山鸢尾）、Versicolour（杂色鸢尾）
 
 26
 00:00:52,870 --> 00:00:53,966
-and virginica.
+以及Virginica（维吉尼亚鸢尾）。
 
 27
 00:00:53,966 --> 00:00:55,340
-Scrolling down,
-you can see we're
+接下来，你可以看到每个种类
 
 28
 00:00:55,340 --> 00:01:00,024
-given 50 examples of each
-type, so 150 examples total.
+我们给出了50个样本，
 
 29
 00:01:00,024 --> 00:01:01,650
-Notice there are four
-features that are
+也就是总的有150个样本
 
 30
 00:01:01,650 --> 00:01:03,620
-used to describe each example.
+每个样本都有四个属性
 
 31
 00:01:03,620 --> 00:01:06,670
-These are the length and
-width of the sepal and petal.
+分别是花萼的长度，花萼的宽度，花瓣的长度，花瓣的宽度
 
 32
 00:01:06,670 --> 00:01:08,730
-And just like in our
-apples and oranges problem,
+类似之前的苹果橘子问题
 
 33
 00:01:08,730 --> 00:01:11,780
-the first four columns give the
-features and the last column
+前四列给出了四中属性，最后一列给出了标签
 
 34
 00:01:11,780 --> 00:01:15,170
-gives the labels, which is the
-type of flower in each row.
+也就是对应行的花的种类
 
 35
 00:01:15,170 --> 00:01:18,140
-Our goal is to use this data
-set to train a classifier.
+我们的目标是使用这个数据集来训练分类器。
 
 36
 00:01:18,140 --> 00:01:21,027
-Then we can use that classifier
-to predict what species
+然后给我们一朵花
+
 
 37
 00:01:21,027 --> 00:01:23,610
-of flower we have if we're given
-a new flower that we've never
+我们就可以使用分类器预测这朵花的种类
 
 38
 00:01:23,610 --> 00:01:25,036
-seen before.
+即使我们从没见过这种花
 
 39
 00:01:25,036 --> 00:01:26,910
-Knowing how to work with
-an existing data set
+了解如何处理现有的数据集是非常有用的
 
 40
 00:01:26,910 --> 00:01:29,910
-is a good skill, so let's
-import Iris into scikit-learn
+那就让我们将Iris数据集导入scikit-learn中
 
 41
 00:01:29,910 --> 00:01:32,120
-and see what it
-looks like in code.
+看看它们在代码中的表示形式
 
 42
 00:01:32,120 --> 00:01:33,870
-Conveniently, the
-friendly folks at scikit
+scikit中提供了一些示例数据集，
 
 43
 00:01:33,870 --> 00:01:35,770
-provided a bunch of
-sample data sets,
+其中就包括Iris, 
 
 44
 00:01:35,770 --> 00:01:37,780
-including Iris, as
-well as utilities
+还有一些公用程式
 
 45
 00:01:37,780 --> 00:01:39,760
-to make them easy to import.
+便于我们引用
 
 46
 00:01:39,760 --> 00:01:42,690
-We can import Iris into
-our code like this.
+我们可以这样将Iris 引入代码中
 
 47
 00:01:42,690 --> 00:01:44,530
-The data set includes
-both the table
+从维基百科下载的数据集包括表和一些元数据
 
 48
 00:01:44,530 --> 00:01:47,230
-from Wikipedia as
-well as some metadata.
+元数据告诉我们
 
 49
 00:01:47,230 --> 00:01:49,630
-The metadata tells you
-the names of the features
+那些属性的名称
 
 50
 00:01:49,630 --> 00:01:52,430
-and the names of different
-types of flowers.
+以及不同种类的花的名字
 
 51
 00:01:52,430 --> 00:01:54,190
-The features and
-examples themselves
+属性和样本都包含在
 
 52
 00:01:54,190 --> 00:01:56,300
-are contained in
-the data variable.
+数据变量中
 
 53
 00:01:56,300 --> 00:01:58,239
-For example, if I print
-out the first entry,
+例如,如果我打印第一个条目,
 
 54
 00:01:58,239 --> 00:02:00,920
-you can see the measurements
-for this flower.
+就可以得到这朵花的预测结果
 
 55
 00:02:00,920 --> 00:02:03,819
-These index to the feature
-names, so the first value
+这些对应属性的值
+所以第一个值指的是花萼长度
 
 56
 00:02:03,819 --> 00:02:06,760
-refers to the sepal length,
-and the second to sepal width,
+第二个指的是花萼的宽度
 
 57
 00:02:06,760 --> 00:02:09,150
-and so on.
+以此类推
 
 58
 00:02:09,150 --> 00:02:11,750
-The target variable
-contains the labels.
+变量target[]指的是标签内容
 
 59
 00:02:11,750 --> 00:02:14,690
-Likewise, these index
-to the target names.
+同样, 
 
 60
 00:02:14,690 --> 00:02:16,000
-Let's print out the first one.
+让我们把第一个打印出来看看
 
 61
 00:02:16,000 --> 00:02:19,229
-A label of 0 means
-it's a setosa.
+标签0表示这是一朵setosa.
 
 62
 00:02:19,229 --> 00:02:21,449
-If you look at the
-table from Wikipedia,
+看着这个维基百科上的图
+
 
 63
 00:02:21,449 --> 00:02:24,520
-you'll notice that we just
-printed out the first row.
+可以看到我们只是把第一行打印出来了
+
 
 64
 00:02:24,520 --> 00:02:27,967
-Now both the data and target
-variables have 150 entries.
+数据和target变量都有150条
+
 
 65
 00:02:27,967 --> 00:02:29,550
-If you want, you can
-iterate over them
+你也可以像这样遍历数据集
 
 66
 00:02:29,550 --> 00:02:32,081
-to print out the entire
-data set like this.
+并打印出来
 
 67
 00:02:32,081 --> 00:02:34,039
-Now that we know how to
-work with the data set,
+既然我们已经知道了怎么处理数据集
 
 68
 00:02:34,039 --> 00:02:35,849
-we're ready to
-train a classifier.
+我们就要开始训练分类器
 
 69
 00:02:35,849 --> 00:02:39,300
-But before we do that, first
-we need to split up the data.
+但是在这之前，第一件事是要分割数据
 
 70
 00:02:39,300 --> 00:02:41,440
-I'm going to remove
-several of the examples
+我把几个样本弄出来
+
 
 71
 00:02:41,440 --> 00:02:43,479
-and put them aside for later.
+先放在一边
 
 72
 00:02:43,479 --> 00:02:46,330
-We'll call the examples I'm
-putting aside our testing data.
+我们把先放在一边的数据称为测试数据
 
 73
 00:02:46,330 --> 00:02:48,780
-We'll keep these separate
-from our training data,
+把这些数据跟我们的训练数据分开
 
 74
 00:02:48,780 --> 00:02:50,940
-and later on we'll use
-our testing examples
+之后我们将用测试数据
 
 75
 00:02:50,940 --> 00:02:53,389
-to test how accurate
-the classifier is
+来验证分类器在分类没遇到过的数据的准确性
 
 76
 00:02:53,389 --> 00:02:55,679
-on data it's never seen before.
+
 
 77
 00:02:55,679 --> 00:02:57,470
-Testing is actually a
-really important part
+测试是在机器学习
+
 
 78
 00:02:57,470 --> 00:02:59,261
-of doing machine learning
-well in practice,
+实践中非常重要的部分
 
 79
 00:02:59,261 --> 00:03:02,280
-and we'll cover it in more
-detail in a future episode.
+在之后的课程中我们将会更详细的介绍
+
 
 80
 00:03:02,280 --> 00:03:04,710
-Just for this exercise,
-I'll remove one example
+针对这个例子，我就对每种种类的花
 
 81
 00:03:04,710 --> 00:03:06,050
-of each type of flower.
+移除一个样本
 
 82
 00:03:06,050 --> 00:03:07,520
-And as it happens,
-the data set is
+因为数据集是按顺序排列的
 
 83
 00:03:07,520 --> 00:03:10,009
-ordered so the first
-setosa is at index 0,
+所以第一个setosa的索引号为0 
 
 84
 00:03:10,009 --> 00:03:14,270
-and the first versicolor
-is at 50, and so on.
+第一个versicolor的索引号为50, 以此类推
 
 85
 00:03:14,270 --> 00:03:16,770
-The syntax looks a little bit
-complicated, but all I'm doing
+语法看起来有点复杂,
 
 86
 00:03:16,770 --> 00:03:21,229
-is removing three entries from
-the data and target variables.
+但我所做就是从数据和目标变量中删除3条样本。
 
 87
 00:03:21,229 --> 00:03:24,080
-Then I'll create two new
-sets of variables-- one
+然后我将设两个新的变量集
 
 88
 00:03:24,080 --> 00:03:26,586
-for training and
-one for testing.
+一个用来训练，另一个用来测试
 
 89
 00:03:26,586 --> 00:03:28,419
-Training will have the
-majority of our data,
+绝大部分的数据进行训练
 
 90
 00:03:28,419 --> 00:03:31,370
-and testing will have just
-the examples I removed.
+只将刚刚移除的样本作测试
 
 91
 00:03:31,370 --> 00:03:33,830
-Now, just as before, we
-can create a decision tree
+现在我们就可以像上集一样创建一个决策树分类器
 
 92
 00:03:33,830 --> 00:03:36,569
-classifier and train it
-on our training data.
+然后用训练数据训练它
 
 93
 00:03:36,569 --> 00:03:40,699
@@ -449,380 +383,337 @@ on our training data.
 
 94
 00:03:40,699 --> 00:03:42,840
-Before we visualize
-it, let's use the tree
+在作可视化之前，让我们用决策树
 
 95
 00:03:42,840 --> 00:03:44,960
-to classify our testing data.
+对我们的测试数据作分类
 
 96
 00:03:44,960 --> 00:03:47,449
-We know we have one
-flower of each type,
+每种种类的花我们都留了一个样本
 
 97
 00:03:47,449 --> 00:03:50,180
-and we can print out
-the labels we expect.
+然后打印出它们的标签
 
 98
 00:03:50,180 --> 00:03:52,160
-Now let's see what
-the tree predicts.
+现在让我们看看决策树预测的结果
 
 99
 00:03:52,160 --> 00:03:54,460
-We'll give it the features
-for our testing data,
+我们给决策树提供测试样本的属性
 
 100
 00:03:54,460 --> 00:03:56,349
-and we'll get back labels.
+就可以得到标签
 
 101
 00:03:56,349 --> 00:03:59,660
-You can see the predicted
-labels match our testing data.
+可以看到预测的结果和测试样本是一致的
 
 102
 00:03:59,660 --> 00:04:01,550
-That means it got
-them all right.
+这说明决策树的结果是正确的
 
 103
 00:04:01,550 --> 00:04:04,039
-Now, keep in mind, this
-was a very simple test,
+这只是一个非常简单的测试
 
 104
 00:04:04,039 --> 00:04:07,940
-and we'll go into more
-detail down the road.
+后面将有更加详细的介绍
 
 105
 00:04:07,940 --> 00:04:09,819
-Now let's visualize
-the tree so we can
+现在我们要将决策树可视化
 
 106
 00:04:09,819 --> 00:04:11,762
-see how the classifier works.
+这有助于我们理解分类器的工作原理
 
 107
 00:04:11,762 --> 00:04:13,220
-To do that, I'm
-going to copy-paste
+从scikit教程中复制粘贴
 
 108
 00:04:13,220 --> 00:04:15,220
-some code in from
-scikit's tutorials,
+一部分代码
 
 109
 00:04:15,220 --> 00:04:16,994
-and because this code
-is for visualization
+因为这些代码是用来做可视化的
 
 110
 00:04:16,994 --> 00:04:18,410
-and not machine-learning
-concepts,
+与机器学习的概念无关
 
 111
 00:04:18,410 --> 00:04:20,380
-I won't cover the details here.
+所以细节部分我就不做介绍了
 
 112
 00:04:20,380 --> 00:04:22,759
-Note that I'm combining the
-code from these two examples
+现在我们将两个样本的数据放在一起
 
 113
 00:04:22,759 --> 00:04:26,329
-to create an easy-to-read PDF.
+并创建一个PDF文件
 
 114
 00:04:26,329 --> 00:04:28,440
-I can run our script
-and open up the PDF,
+运行脚步可以打开pdf文件
+
 
 115
 00:04:28,440 --> 00:04:30,120
-and we can see the tree.
+我们就可以看到决策树了
 
 116
 00:04:30,120 --> 00:04:33,810
-To use it to classify data, you
-start by reading from the top.
+用决策树来分类数据，你需要从树的根部开始看
+
 
 117
 00:04:33,810 --> 00:04:35,829
-Each node asks a
-yes or no question
+每个结点都回答了关于属性的
 
 118
 00:04:35,829 --> 00:04:37,504
-about one of the features.
+是或否的问题
 
 119
 00:04:37,504 --> 00:04:39,420
-For example, this node
-asks if the pedal width
+例如，这个结点的问题是花瓣的宽度
+
 
 120
 00:04:39,420 --> 00:04:41,420
-is less than 0.8 centimeters.
+是否小于0.8厘米
 
 121
 00:04:41,420 --> 00:04:44,199
-If it's true for the example
-you're classifying, go left.
+如果对于这个样本来说答案为“是”，则往左
+
 
 122
 00:04:44,199 --> 00:04:46,170
-Otherwise, go right.
+否则往右
 
 123
 00:04:46,170 --> 00:04:48,589
-Now let's use this tree
-to classify an example
+现在我们用这个树
+
 
 124
 00:04:48,589 --> 00:04:50,130
-from our testing data.
+对我们的一个测试数据作分类
 
 125
 00:04:50,130 --> 00:04:53,233
-Here are the features and label
-for our first testing flower.
+这是我们第一个测试花朵的属性和标签
 
 126
 00:04:53,233 --> 00:04:54,899
-Remember, you can
-find the feature names
+通过元数据
 
 127
 00:04:54,899 --> 00:04:56,579
-by looking at the metadata.
+我们可以看到属性名称
 
 128
 00:04:56,579 --> 00:04:58,980
-We know this flower is
-a setosa, so let's see
+我们知道这朵花是setosa,
 
 129
 00:04:58,980 --> 00:05:00,779
-what the tree predicts.
+那让我们来看看决策树的预测结果
 
 130
 00:05:00,779 --> 00:05:03,290
-I'll resize the windows to
-make this easier to see.
+
+我调整窗口的大小好让大家看的清楚
 
 131
 00:05:03,290 --> 00:05:04,889
-And the first
-question the tree asks
+决策树的第一个问题是
 
 132
 00:05:04,889 --> 00:05:08,110
-is whether the petal width
-is less than 0.8 centimeters.
+花朵的宽度是否小于0.8厘米
 
 133
 00:05:08,110 --> 00:05:09,540
-That's the fourth feature.
+这是第四个属性
 
 134
 00:05:09,540 --> 00:05:11,709
-The answer is true,
-so we proceed left.
+答案是“是，所以我们继续往左”
 
 135
 00:05:11,709 --> 00:05:14,149
-At this point, we're
-already at a leaf node.
+这个点已经是叶子结点了
+
 
 136
 00:05:14,149 --> 00:05:15,860
-There are no other
-questions to ask,
+所以接下来不需要回答其他的问题了
 
 137
 00:05:15,860 --> 00:05:18,490
-so the tree gives us
-a prediction, setosa,
+决策树给出了预测结果，即 setosa,
 
 138
 00:05:18,490 --> 00:05:19,440
-and it's right.
+这是正确的答案
 
 139
 00:05:19,440 --> 00:05:23,329
-Notice the label is 0, which
-indexes to that type of flower.
+注意标签值为0, 即指向了对应种类的花
 
 140
 00:05:23,329 --> 00:05:25,930
-Now let's try our
-second testing example.
+接下来继续第二条测试数据
 
 141
 00:05:25,930 --> 00:05:27,319
-This one is a versicolor.
+这个数据是versicolor的
 
 142
 00:05:27,319 --> 00:05:29,329
-Let's see what
-the tree predicts.
+来看看决策树给出的答案
 
 143
 00:05:29,329 --> 00:05:31,839
-Again we read from the top,
-and this time the pedal width
+我们再从树根开始，
+这次花瓣的宽度
 
 144
 00:05:31,839 --> 00:05:33,750
-is greater than 0.8 centimeters.
+大于0.8厘米
 
 145
 00:05:33,750 --> 00:05:35,839
-The answer to the tree's
-question is false,
+即这个结点的问题答案为“否”
 
 146
 00:05:35,839 --> 00:05:36,829
-so we go right.
+所以往右走
 
 147
 00:05:36,829 --> 00:05:39,245
-The next question the tree
-asks is whether the pedal width
+决策树的下一个问题是
 
 148
 00:05:39,245 --> 00:05:40,709
-is less than 1.75.
+花瓣的宽度是否小于1.75厘米
 
 149
 00:05:40,709 --> 00:05:42,410
-It's trying to narrow it down.
+这是为了缩小范围
 
 150
 00:05:42,410 --> 00:05:44,440
-That's true, so we go left.
+答案为“是”，所以接着往左走
 
 151
 00:05:44,440 --> 00:05:47,319
-Now it asks if the pedal
-length is less than 4.95.
+下一个问题是花瓣的长度是否小于4.95厘米.
 
 152
 00:05:47,319 --> 00:05:49,180
-That's true, so
-we go left again.
+答案为“是”，故接着往左
 
 153
 00:05:49,180 --> 00:05:51,130
-And finally, the tree
-asks if the pedal width
+最后一个问题是花瓣的宽度
 
 154
 00:05:51,130 --> 00:05:52,810
-is less than 1.65.
+ 是否小于1.65厘米.
 
 155
 00:05:52,810 --> 00:05:54,300
-That's true, so left it is.
+答案为“是”, 所以往左
 
 156
 00:05:54,300 --> 00:05:57,029
-And now we have our
-prediction-- it's a versicolor,
+预测的结果就是这是样本属于versicolor,
+
 
 157
 00:05:57,029 --> 00:05:58,610
-and that's right again.
+结果又一次预测正确
 
 158
 00:05:58,610 --> 00:06:01,170
-You can try the last one
-on your own as an exercise.
+你可以把最后一个测试样本当做练习
 
 159
 00:06:01,170 --> 00:06:03,079
-And remember, the way
-we're using the tree
+记住，我们利用树来预测的过程
+
 
 160
 00:06:03,079 --> 00:06:05,607
-is the same way
-it works in code.
+就是代码运行的过程
 
 161
 00:06:05,607 --> 00:06:07,440
-So that's how you quickly
-visualize and read
+现在你已经了解了
 
 162
 00:06:07,440 --> 00:06:08,285
-a decision tree.
+决策树的过程
 
 163
 00:06:08,285 --> 00:06:09,660
-There's a lot more
-to learn here,
+这里还有更多要了解的内容
 
 164
 00:06:09,660 --> 00:06:12,720
-especially how they're built
-automatically from examples.
+特别是他们是如何通过样本自动创建一颗树    
 
 165
 00:06:12,720 --> 00:06:14,620
-We'll get to that
-in a future episode.
+我将会在接下来的课程中作深入介绍
 
 166
 00:06:14,620 --> 00:06:17,019
-But for now, let's close
-with an essential point.
+但是现在，让我们了解一个更加关键的问题
 
 167
 00:06:17,019 --> 00:06:19,519
-Every question the tree
-asks must be about one
+决策树的每一个问题
 
 168
 00:06:19,519 --> 00:06:20,264
-of your features.
+都是与属性有关
 
 169
 00:06:20,264 --> 00:06:22,680
-That means the better your
-features are, the better a tree
+这意味着属性选取得越好
 
 170
 00:06:22,680 --> 00:06:23,630
-you can build.
+决策树就越准确
 
 171
 00:06:23,630 --> 00:06:25,300
-And the next episode
-will start looking
+下一节课就介绍
 
 172
 00:06:25,300 --> 00:06:26,514
-at what makes a good feature.
+怎样使属性取得更好
 
 173
 00:06:26,514 --> 00:06:28,930
-Thanks very much for watching,
-and I'll see you next time.
+谢谢观看，下节课再见
 
 174
 00:06:28,930 --> 00:06:31,980
-[MUSIC PLAYING]
+本集中文字幕翻译：sisely
 
 175
 00:06:31,980 --> 00:06:41,000
