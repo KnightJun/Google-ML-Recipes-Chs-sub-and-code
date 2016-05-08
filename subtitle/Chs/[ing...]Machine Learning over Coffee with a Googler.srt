@@ -1,0 +1,1050 @@
+1
+00:00:00,000 --> 00:00:00,000
+Youtube subtitles download by mo.dbxdb.com 
+
+2
+00:00:00,000 --> 00:00:02,350
+[MUSIC PLAYING]
+
+3
+00:00:02,350 --> 00:00:06,297
+
+
+4
+00:00:06,297 --> 00:00:08,130
+LAURENCE MORONEY: Today
+I'm in the Big Apple
+
+5
+00:00:08,130 --> 00:00:09,720
+meeting with Josh
+Gordon from Google
+
+6
+00:00:09,720 --> 00:00:11,360
+to talk about machine
+learning, where
+
+7
+00:00:11,360 --> 00:00:14,310
+we will dig into how it
+works, why it's important,
+
+8
+00:00:14,310 --> 00:00:17,437
+and where you can
+learn all about it.
+
+9
+00:00:17,437 --> 00:00:19,520
+Welcome to Coffee with a
+Googler in New York City.
+
+10
+00:00:19,520 --> 00:00:21,400
+I'm Laurence Moroney,
+and I'm here today
+
+11
+00:00:21,400 --> 00:00:23,500
+speaking with Joshua Gordon.
+
+12
+00:00:23,500 --> 00:00:25,180
+Now, it's something
+that a lot of people
+
+13
+00:00:25,180 --> 00:00:27,179
+don't really understand
+what machine learning is
+
+14
+00:00:27,179 --> 00:00:28,114
+in a concrete manner.
+
+15
+00:00:28,114 --> 00:00:29,530
+JOSHUA GORDON: So
+machine learning
+
+16
+00:00:29,530 --> 00:00:31,500
+is all about learning
+from examples
+
+17
+00:00:31,500 --> 00:00:32,969
+rather than writing
+manual rules.
+
+18
+00:00:32,969 --> 00:00:34,009
+LAURENCE MORONEY: Got it.
+
+19
+00:00:34,009 --> 00:00:35,510
+JOSHUA GORDON: So the
+short way of saying
+
+20
+00:00:35,510 --> 00:00:38,230
+that is regular programming is
+you write a lot of manual rules
+
+21
+00:00:38,230 --> 00:00:39,170
+to solve a problem.
+
+22
+00:00:39,170 --> 00:00:41,210
+In machine learning,
+you let the algorithm
+
+23
+00:00:41,210 --> 00:00:42,269
+find those rules for you.
+
+24
+00:00:42,269 --> 00:00:43,310
+LAURENCE MORONEY: Got it.
+
+25
+00:00:43,310 --> 00:00:43,310
+JOSHUA GORDON: From examples.
+
+26
+00:00:43,970 --> 00:00:45,200
+LAURENCE MORONEY:
+So pattern matching.
+
+27
+00:00:45,200 --> 00:00:47,520
+It might be visual, or it
+might be other patterns
+
+28
+00:00:47,520 --> 00:00:48,060
+that are hidden in data.
+
+29
+00:00:48,060 --> 00:00:48,060
+JOSHUA GORDON: Absolutely.
+
+30
+00:00:48,740 --> 00:00:51,406
+And so the input to machine-- so
+the beauty of machine learning,
+
+31
+00:00:51,406 --> 00:00:54,170
+and the real secret sauce,
+is that an algorithm that
+
+32
+00:00:54,170 --> 00:00:57,760
+learns patterns from
+data can solve thousands
+
+33
+00:00:57,760 --> 00:00:58,850
+of different problems.
+
+34
+00:00:58,850 --> 00:01:01,266
+And the reason is if I write
+a Python program to recognize
+
+35
+00:01:01,266 --> 00:01:03,509
+digits, my program is hard
+coded to work with digits.
+
+36
+00:01:03,509 --> 00:01:04,550
+LAURENCE MORONEY: Got it.
+
+37
+00:01:04,550 --> 00:01:07,049
+JOSHUA GORDON: But if I write
+an algorithm to learn patterns
+
+38
+00:01:07,049 --> 00:01:09,520
+from data, I can use that
+for speech recognition, image
+
+39
+00:01:09,520 --> 00:01:11,470
+recognition, medicine.
+
+40
+00:01:11,470 --> 00:01:14,010
+Basically, anything that
+you can start with examples,
+
+41
+00:01:14,010 --> 00:01:17,880
+just tell apart A and B, my
+same algorithm that I wrote just
+
+42
+00:01:17,880 --> 00:01:20,380
+once can tackle
+all these problems.
+
+43
+00:01:20,380 --> 00:01:23,049
+And that's a really special and
+actually fairly profound thing.
+
+44
+00:01:23,049 --> 00:01:24,010
+LAURENCE MORONEY: Absolutely.
+
+45
+00:01:24,010 --> 00:01:26,093
+Now, one of the things in
+your classes that you're
+
+46
+00:01:26,093 --> 00:01:28,500
+talking about that you're
+starting with language.
+
+47
+00:01:28,500 --> 00:01:30,260
+You're starting with
+Java and Python,
+
+48
+00:01:30,260 --> 00:01:30,260
+I think it was, that you said?
+
+49
+00:01:30,810 --> 00:01:31,590
+JOSHUA GORDON: Yes, absolutely.
+
+50
+00:01:31,590 --> 00:01:32,590
+LAURENCE MORONEY:
+So how's the class
+
+51
+00:01:32,590 --> 00:01:33,700
+going to be
+structured for people
+
+52
+00:01:33,700 --> 00:01:35,330
+who want to be these data
+scientists of the future?
+
+53
+00:01:35,330 --> 00:01:35,330
+JOSHUA GORDON: Absolutely.
+
+54
+00:01:35,910 --> 00:01:37,950
+So first of all, there
+are zero prerequisites.
+
+55
+00:01:37,950 --> 00:01:38,380
+Well, that's not true.
+
+56
+00:01:38,380 --> 00:01:39,090
+There's one prerequisite.
+
+57
+00:01:39,090 --> 00:01:39,090
+LAURENCE MORONEY: My favorite.
+
+58
+00:01:39,780 --> 00:01:40,209
+Oh, OK.
+
+59
+00:01:40,209 --> 00:01:41,376
+Well, what's the one prereq?
+
+60
+00:01:41,376 --> 00:01:44,500
+JOSHUA GORDON: Basic programming
+ability in Java or Python.
+
+61
+00:01:44,500 --> 00:01:48,230
+And by basic, I mean you can run
+scripts and you can tweak them.
+
+62
+00:01:48,230 --> 00:01:49,770
+That's it.
+
+63
+00:01:49,770 --> 00:01:51,440
+A little bit of
+high school math.
+
+64
+00:01:51,440 --> 00:01:54,450
+And that means like basic
+algebra, basic geometry.
+
+65
+00:01:54,450 --> 00:01:56,470
+When I say basic geometry,
+to be totally honest,
+
+66
+00:01:56,470 --> 00:01:58,447
+if you asked me, like,
+what sine and cosine,
+
+67
+00:01:58,447 --> 00:01:59,530
+I would have to Google it.
+
+68
+00:01:59,530 --> 00:02:01,510
+I don't remember, honestly.
+
+69
+00:02:01,510 --> 00:02:04,419
+So just basic familiarity,
+and that's it.
+
+70
+00:02:04,419 --> 00:02:06,459
+And we're going to teach
+the class in three ways.
+
+71
+00:02:06,459 --> 00:02:09,030
+We're going to teach it
+totally from the ground up.
+
+72
+00:02:09,030 --> 00:02:12,205
+So one problem I had with some
+of the academic classes I took
+
+73
+00:02:12,205 --> 00:02:14,080
+is that they'll talk
+about a fancy algorithm,
+
+74
+00:02:14,080 --> 00:02:16,149
+like neural
+networks, but they'll
+
+75
+00:02:16,149 --> 00:02:17,440
+talk about it in terms of math.
+
+76
+00:02:17,440 --> 00:02:20,120
+And so at the end of the class,
+I don't know how to build that.
+
+77
+00:02:20,120 --> 00:02:21,107
+I can't really do it.
+
+78
+00:02:21,107 --> 00:02:22,440
+We're doing it in a reverse way.
+
+79
+00:02:22,440 --> 00:02:24,440
+We're building it step
+by step, and we're
+
+80
+00:02:24,440 --> 00:02:27,744
+explaining only the math that's
+really necessary as we go.
+
+81
+00:02:27,744 --> 00:02:30,160
+And instead of equations, we're
+going use visual examples.
+
+82
+00:02:30,160 --> 00:02:30,160
+LAURENCE MORONEY: Perfect.
+
+83
+00:02:30,729 --> 00:02:32,187
+JOSHUA GORDON: So
+an equation could
+
+84
+00:02:32,187 --> 00:02:34,060
+be like if you talk
+about gradient descent,
+
+85
+00:02:34,060 --> 00:02:36,259
+gradient descent
+basically means finding
+
+86
+00:02:36,259 --> 00:02:37,883
+the minimum of a function.
+
+87
+00:02:37,883 --> 00:02:40,550
+So if I just say that, like as a
+developer, I'm like, all right,
+
+88
+00:02:40,550 --> 00:02:41,160
+what does that mean?
+
+89
+00:02:41,160 --> 00:02:42,535
+So you can think
+of any equation,
+
+90
+00:02:42,535 --> 00:02:45,550
+like x cubed plus y squared
+plus whatever equals 7.
+
+91
+00:02:45,550 --> 00:02:47,250
+There's some value of x and y.
+
+92
+00:02:47,250 --> 00:02:48,660
+LAURENCE MORONEY: That's going
+to be the bottom of that curve,
+
+93
+00:02:48,660 --> 00:02:48,660
+right?
+
+94
+00:02:48,919 --> 00:02:49,270
+JOSHUA GORDON: Or not equals 7.
+
+95
+00:02:49,270 --> 00:02:50,020
+Equals some value.
+
+96
+00:02:50,020 --> 00:02:50,020
+Right.
+
+97
+00:02:50,660 --> 00:02:52,720
+Anyway, you can find
+the bottom of that curve
+
+98
+00:02:52,720 --> 00:02:54,069
+literally by thinking as a bowl.
+
+99
+00:02:54,069 --> 00:02:56,270
+You can drop a piece
+of fruit in a bowl
+
+100
+00:02:56,270 --> 00:02:57,715
+and it will roll to the bottom.
+
+101
+00:02:57,715 --> 00:02:59,340
+And gradient descent
+just means finding
+
+102
+00:02:59,340 --> 00:03:00,960
+where this function is 0.
+
+103
+00:03:00,960 --> 00:03:03,009
+And you can actually
+describe that really simply
+
+104
+00:03:03,009 --> 00:03:05,280
+in only like 10 or
+12 lines of Python,
+
+105
+00:03:05,280 --> 00:03:07,585
+actually, instead of
+five slides of equations.
+
+106
+00:03:07,585 --> 00:03:09,210
+LAURENCE MORONEY:
+And I think it's also
+
+107
+00:03:09,210 --> 00:03:11,300
+important to understand
+why you need to find
+
+108
+00:03:11,300 --> 00:03:12,300
+the bottom of the curve.
+
+109
+00:03:12,300 --> 00:03:13,340
+JOSHUA GORDON: Absolutely.
+
+110
+00:03:13,340 --> 00:03:14,919
+LAURENCE MORONEY: And just
+focus on that example.
+
+111
+00:03:14,919 --> 00:03:15,330
+JOSHUA GORDON: Absolutely.
+
+112
+00:03:15,330 --> 00:03:17,419
+So that's difficult
+to describe concisely.
+
+113
+00:03:17,419 --> 00:03:19,076
+LAURENCE MORONEY: Right.
+
+114
+00:03:19,076 --> 00:03:20,660
+JOSHUA GORDON: So
+in machine learning,
+
+115
+00:03:20,660 --> 00:03:22,349
+let's say you're
+writing an algorithm.
+
+116
+00:03:22,349 --> 00:03:26,240
+Let's say it's to distinguish
+apples from oranges.
+
+117
+00:03:26,240 --> 00:03:29,199
+You always want to know, how
+accurate is my algorithm?
+
+118
+00:03:29,199 --> 00:03:31,090
+Like, I can solve that
+problem in one line.
+
+119
+00:03:31,090 --> 00:03:34,020
+I can just say,
+return math.random.
+
+120
+00:03:34,020 --> 00:03:35,389
+So one line, math.random.
+
+121
+00:03:35,389 --> 00:03:37,389
+LAURENCE MORONEY: That
+would be the perfect one.
+
+122
+00:03:37,389 --> 00:03:39,084
+JOSHUA GORDON: My
+accuracy is crap.
+
+123
+00:03:39,084 --> 00:03:40,000
+LAURENCE MORONEY: 50%.
+
+124
+00:03:40,000 --> 00:03:40,000
+JOSHUA GORDON: Right.
+
+125
+00:03:40,874 --> 00:03:42,160
+Yeah, it's 50%.
+
+126
+00:03:42,160 --> 00:03:43,190
+LAURENCE MORONEY: Between
+an apple and an orange.
+
+127
+00:03:43,190 --> 00:03:44,630
+JOSHUA GORDON: It's a one liner.
+
+128
+00:03:44,630 --> 00:03:47,186
+But really, we want
+to get-- another way
+
+129
+00:03:47,186 --> 00:03:48,810
+of describing accuracy
+is you can think
+
+130
+00:03:48,810 --> 00:03:50,690
+about it n terms of error.
+
+131
+00:03:50,690 --> 00:03:53,120
+High accuracy means low error.
+
+132
+00:03:53,120 --> 00:03:57,550
+And you can have an equation
+that describes your error.
+
+133
+00:03:57,550 --> 00:03:59,569
+And the minimum of
+that equation is
+
+134
+00:03:59,569 --> 00:04:01,741
+going to give you
+the highest accuracy.
+
+135
+00:04:01,741 --> 00:04:03,740
+So you can write your
+machine learning algorithm
+
+136
+00:04:03,740 --> 00:04:06,299
+to try and minimize the equation
+that describes the error.
+
+137
+00:04:06,299 --> 00:04:07,340
+LAURENCE MORONEY: Got it.
+
+138
+00:04:07,340 --> 00:04:09,120
+JOSHUA GORDON: And we'll
+make that super concrete
+
+139
+00:04:09,120 --> 00:04:11,319
+in the class, but that's
+where minimization comes in
+
+140
+00:04:11,319 --> 00:04:12,669
+and that's where gradient
+descent comes in.
+
+141
+00:04:12,669 --> 00:04:13,319
+LAURENCE MORONEY:
+So one of the things
+
+142
+00:04:13,319 --> 00:04:14,735
+you're saying in
+the class, you're
+
+143
+00:04:14,735 --> 00:04:16,485
+teaching just a pure
+Java, Python version.
+
+144
+00:04:16,485 --> 00:04:18,110
+But there's also a
+version where you're
+
+145
+00:04:18,110 --> 00:04:19,490
+bringing in
+preexisting libraries
+
+146
+00:04:19,490 --> 00:04:20,720
+that have come from academia.
+
+147
+00:04:20,720 --> 00:04:20,720
+JOSHUA GORDON: Absolutely.
+
+148
+00:04:20,985 --> 00:04:22,259
+LAURENCE MORONEY: That will
+solve a lot of this for you,
+
+149
+00:04:22,259 --> 00:04:22,259
+right?
+
+150
+00:04:22,699 --> 00:04:23,230
+JOSHUA GORDON: Absolutely.
+
+151
+00:04:23,230 --> 00:04:24,562
+So I want to do a couple things.
+
+152
+00:04:24,562 --> 00:04:27,009
+One is I want to
+provide the TLDR.
+
+153
+00:04:27,009 --> 00:04:29,720
+So honestly, as a
+developer, I like to get up
+
+154
+00:04:29,720 --> 00:04:31,089
+and running really fast.
+
+155
+00:04:31,089 --> 00:04:34,632
+So we're also going to use
+open source libraries from just
+
+156
+00:04:34,632 --> 00:04:35,589
+different universities.
+
+157
+00:04:35,589 --> 00:04:37,990
+There's one in New Zealand
+that I really love.
+
+158
+00:04:37,990 --> 00:04:40,509
+We're going to you how to build,
+basically first, everything
+
+159
+00:04:40,509 --> 00:04:42,384
+from the ground up step
+by step from scratch.
+
+160
+00:04:42,384 --> 00:04:45,730
+And the reason we do that is
+because it keeps us honest.
+
+161
+00:04:45,730 --> 00:04:48,250
+If you build every
+single piece, you
+
+162
+00:04:48,250 --> 00:04:50,560
+have some understanding
+of every single piece.
+
+163
+00:04:50,560 --> 00:04:52,139
+LAURENCE MORONEY: And if
+you're relying on somebody else
+
+164
+00:04:52,139 --> 00:04:54,329
+having done the work, you don't
+fully get to understand it
+
+165
+00:04:54,329 --> 00:04:54,329
+yourself.
+
+166
+00:04:54,490 --> 00:04:55,500
+JOSHUA GORDON: Exactly.
+
+167
+00:04:55,500 --> 00:04:57,750
+Now, another thing is using
+the open source libraries,
+
+168
+00:04:57,750 --> 00:05:00,329
+honestly, you can solve
+probably 80% or 90%
+
+169
+00:05:00,329 --> 00:05:03,389
+of the machine learning problems
+you would as a data scientist.
+
+170
+00:05:03,389 --> 00:05:04,509
+LAURENCE MORONEY: Nice.
+
+171
+00:05:04,509 --> 00:05:06,800
+JOSHUA GORDON: Now, when you
+get to the really gigantic
+
+172
+00:05:06,800 --> 00:05:09,471
+problems, then really it
+makes sense to use the cloud.
+
+173
+00:05:09,471 --> 00:05:11,180
+So we're also going
+to teach how to solve
+
+174
+00:05:11,180 --> 00:05:12,470
+problems using Google APIs.
+
+175
+00:05:12,470 --> 00:05:14,529
+But that's at the
+very end of the class,
+
+176
+00:05:14,529 --> 00:05:16,345
+and it's totally optional.
+
+177
+00:05:16,345 --> 00:05:17,519
+LAURENCE MORONEY: This
+is all on YouTube, right?
+
+178
+00:05:17,519 --> 00:05:18,769
+JOSHUA GORDON: All on YouTube.
+
+179
+00:05:18,769 --> 00:05:21,500
+There might be some ads on
+it, but that's literally it.
+
+180
+00:05:21,500 --> 00:05:22,230
+We think it's going
+to be awesome.
+
+181
+00:05:22,230 --> 00:05:23,410
+LAURENCE MORONEY: Like
+source code and stuff
+
+182
+00:05:23,410 --> 00:05:23,410
+that you've done?
+
+183
+00:05:23,930 --> 00:05:25,800
+JOSHUA GORDON: The source
+code will be on GitHub.
+
+184
+00:05:25,800 --> 00:05:26,569
+LAURENCE MORONEY:
+It's all on GitHub.
+
+185
+00:05:26,569 --> 00:05:26,569
+Perfect.
+
+186
+00:05:26,709 --> 00:05:27,069
+JOSHUA GORDON: It
+will all be on GitHub.
+
+187
+00:05:27,069 --> 00:05:28,019
+And the reason I
+was hesitating is
+
+188
+00:05:28,019 --> 00:05:29,644
+I'm writing all this
+as we're speaking,
+
+189
+00:05:29,644 --> 00:05:30,819
+so I'm totally exhausted.
+
+190
+00:05:30,819 --> 00:05:32,699
+But yes, it's totally,
+100% out there.
+
+191
+00:05:32,699 --> 00:05:35,389
+LAURENCE MORONEY: Well, you're
+still looking energetic to me.
+
+192
+00:05:35,389 --> 00:05:38,386
+JOSHUA GORDON: I've had a
+lot of coffee with a Googler.
+
+193
+00:05:38,386 --> 00:05:39,399
+Good for you.
+
+194
+00:05:39,399 --> 00:05:40,774
+LAURENCE MORONEY:
+Well, I for one
+
+195
+00:05:40,774 --> 00:05:42,483
+am really looking
+forward to this course.
+
+196
+00:05:42,483 --> 00:05:45,709
+I'm looking forward to learning
+what you have to teach.
+
+197
+00:05:45,709 --> 00:05:47,269
+I've had the same
+kind of struggles
+
+198
+00:05:47,269 --> 00:05:50,096
+as you in trying to understand
+the math behind this
+
+199
+00:05:50,096 --> 00:05:51,470
+and why I'm doing
+the math, which
+
+200
+00:05:51,470 --> 00:05:53,360
+is why I had those
+pointed questions earlier.
+
+201
+00:05:53,360 --> 00:05:54,139
+JOSHUA GORDON: Absolutely.
+
+202
+00:05:54,139 --> 00:05:54,139
+LAURENCE MORONEY:
+So thanks, Josh.
+
+203
+00:05:54,829 --> 00:05:56,029
+That was a whole lot of fun.
+
+204
+00:05:56,029 --> 00:05:57,814
+And I've learned so
+much about machine
+
+205
+00:05:57,814 --> 00:05:59,730
+learning just from these
+few minutes with you,
+
+206
+00:05:59,730 --> 00:06:01,410
+so I'm really looking
+forward to your class.
+
+207
+00:06:01,410 --> 00:06:01,410
+JOSHUA GORDON: Thanks so much.
+
+208
+00:06:01,970 --> 00:06:03,550
+LAURENCE MORONEY: If you've
+enjoyed this episode of Coffee
+
+209
+00:06:03,550 --> 00:06:05,420
+with a Googler and if you
+want to learn machine learning
+
+210
+00:06:05,420 --> 00:06:07,694
+for yourself, if you have
+any questions for Joshua,
+
+211
+00:06:07,694 --> 00:06:09,110
+or if you've any
+questions for me,
+
+212
+00:06:09,110 --> 00:06:10,819
+please leave them in
+the comments below.
+
+213
+00:06:10,819 --> 00:06:12,610
+And tune into the Google
+Developers channel
+
+214
+00:06:12,610 --> 00:06:14,380
+for more great videos,
+including episodes
+
+215
+00:06:14,380 --> 00:06:15,529
+of Coffee with a Googler.
+
+216
+00:06:15,529 --> 00:06:16,605
+Thank you.
+
+217
+00:06:16,605 --> 00:06:17,521
+[MUSIC PLAYING]
+
+218
+00:06:17,521 --> 00:06:19,730
+JOSHUA GORDON: You really
+can learn machine learning,
+
+219
+00:06:19,730 --> 00:06:21,949
+and it's faster and
+easier than you think.
+
+220
+00:06:21,949 --> 00:06:25,540
+We've gone through a ton of
+classes, textbooks, and blog
+
+221
+00:06:25,540 --> 00:06:29,120
+posts to bring you the clearest
+and most concise explanations
+
+222
+00:06:29,120 --> 00:06:30,459
+of the hard concepts.
+
+223
+00:06:30,459 --> 00:06:32,024
+We really think you're going
+to be able to learn it and have
+
+224
+00:06:32,024 --> 00:06:33,290
+some fun on the way.
+
+225
+00:06:33,290 --> 00:06:35,410
+Click here to get started.
+
+226
+00:06:35,410 --> 00:06:36,000
+ Subtitles End: mo.dbxdb.com
+
