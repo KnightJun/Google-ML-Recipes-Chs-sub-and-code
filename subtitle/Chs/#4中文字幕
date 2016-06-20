@@ -225,121 +225,149 @@ Why is that?
 00:01:28,209 --> 00:01:30,670
 Well, that's because one
 way to think of a classifier
+因为我们可以把分类器
+
 
 41
 00:01:30,670 --> 00:01:32,230
 is as a function.
+看成是一个函数。
 
 42
 00:01:32,230 --> 00:01:34,750
 At a high level, you can
 think of x as the input
+在抽象层面上，你可以把特征x 视作输入
 
 43
 00:01:34,750 --> 00:01:36,500
 and y as the output.
+然后把分类标签y 视作输出。
 
 44
 00:01:36,500 --> 00:01:39,892
 I'll talk more about that in
 the second half of this episode.
+我会在本视频的后半部分着重讨论这个。
 
 45
 00:01:39,892 --> 00:01:42,349
 After we import the data set,
 the first thing we want to do
+在我们导入了数据集后，我们首先要做的
 
 46
 00:01:42,349 --> 00:01:44,590
 is partition it
 into Train and Test.
+是把它们分为训练集和测试集。
 
 47
 00:01:44,590 --> 00:01:46,640
 And to do that, we can
 import a handy utility,
+我们导入一个函数来分隔数据集，
 
 48
 00:01:46,640 --> 00:01:48,530
 and it makes the syntax clear.
+让我们把程序变得优雅一点。。
 
 49
 00:01:48,530 --> 00:01:50,340
 We're taking our
 x's and our y's,
+我们把我们的x和y
 
 50
 00:01:50,340 --> 00:01:52,930
 or our features and labels,
 and partitioning them
+或者说特征和标签
 
 51
 00:01:52,930 --> 00:01:54,450
 into two sets.
+分为两部分。
 
 52
 00:01:54,450 --> 00:01:56,690
 X_train and y_train are
 the features and labels
+X_train是训练集的特征子集
 
 53
 00:01:56,690 --> 00:01:57,980
 for the training set.
+y_train是训练集的标签子集。
 
 54
 00:01:57,980 --> 00:02:00,630
 And X_test and y_test are
 the features and labels
+然后X_test是测试集的特征子集，
 
 55
 00:02:00,630 --> 00:02:02,031
 for the testing set.
+然后Y_test是测试集的标签子集，
 
 56
 00:02:02,031 --> 00:02:04,239
 Here, I'm just saying that
 I want half the data to be
+这里，我刚刚说我希望一半的数据
 
 57
 00:02:04,239 --> 00:02:05,580
 used for testing.
+能够被用作测试集。
 
 58
 00:02:05,580 --> 00:02:09,229
 So if we have 150 examples
 in Iris, 75 will be in Train
+所以如果我们有150个鸢尾花的数据，
+那么75个将用作训练，
 
 59
 00:02:09,229 --> 00:02:11,520
 and 75 will be in Test.
+还有75个将被用作测试。
 
 60
 00:02:11,520 --> 00:02:13,280
 Now we'll create our classifier.
+现在让我们来创建我们的分类器。
 
 61
 00:02:13,280 --> 00:02:14,979
 I'll use two
 different types here
+我将会用两种不同的类型（的分类器）
 
 62
 00:02:14,979 --> 00:02:17,860
 to show you how they
 accomplish the same task.
+来展示他们是如何完成同样的任务的。
 
 63
 00:02:17,860 --> 00:02:20,500
 Let's start with the decision
 tree we've already seen.
+让我们从我们已经见过的决策树开始。
 
 64
 00:02:20,500 --> 00:02:22,240
 Note there's only
 two lines of code
+注意到这里只有两行代码
 
 65
 00:02:22,240 --> 00:02:23,448
 that are classifier-specific.
+是和分类器有关的。
 
 66
 00:02:23,448 --> 00:02:25,650
@@ -349,173 +377,210 @@ that are classifier-specific.
 00:02:25,650 --> 00:02:28,830
 Now let's train the classifier
 using our training data.
+现在让我们用训练集来训练分类器。
 
 68
 00:02:28,830 --> 00:02:31,599
 At this point, it's ready
 to be used to classify data.
+在这里，分类器准备开始分类数据。
 
 69
 00:02:31,599 --> 00:02:33,330
 And next, we'll call
 the predict method
+接下来，让我们来调用预测的方法
 
 70
 00:02:33,330 --> 00:02:35,805
 and use it to classify
 our testing data.
+然后用它来分类我们的测试集。
 
 71
 00:02:35,805 --> 00:02:37,180
 If you print out
 the predictions,
+如果你答应出预测的结果，
 
 72
 00:02:37,180 --> 00:02:38,970
 you'll see there are
 a list of numbers.
+你将会看到这样一大串数字。
 
 73
 00:02:38,970 --> 00:02:40,660
 These correspond
 to the type of Iris
+他们是分类器对于测试集中每一组数据
 
 74
 00:02:40,660 --> 00:02:44,009
 the classifier predicts for
 each row in the testing data.
+预测的鸢尾花的花型的结果。
+
 
 75
 00:02:44,009 --> 00:02:46,229
 Now let's see how
 accurate our classifier
+现在让我们来看看分类器
 
 76
 00:02:46,229 --> 00:02:48,280
 was on the testing set.
+在测试集上预测的准确度。
 
 77
 00:02:48,280 --> 00:02:50,840
 Recall that up top, we have
 the true labels for the testing
+回想一下，我们有测试集中每一组数据
 
 78
 00:02:50,840 --> 00:02:51,650
 data.
+的准确的结果。
 
 79
 00:02:51,650 --> 00:02:53,460
 To calculate our
 accuracy, we can
+为了计算我们的准确率，
 
 80
 00:02:53,460 --> 00:02:55,759
 compare the predicted
 labels to the true labels,
+我们可以把真实的标签和预测的标签做比较，
 
 81
 00:02:55,759 --> 00:02:57,348
 and tally up the score.
+然后计算出我们的得分。
 
 82
 00:02:57,348 --> 00:02:59,139
 There's a convenience
 method in [? Sykit ?]
+在sklearn中有一个很便捷的方法
 
 83
 00:02:59,139 --> 00:03:00,830
 we can import to do that.
+我们可以导入它来帮助我们。
 
 84
 00:03:00,830 --> 00:03:03,505
 Notice here, our
 accuracy was over 90%.
+注意到我们现在的准确率已经超过90%，
 
 85
 00:03:03,505 --> 00:03:06,130
 If you try this on your own, it
 might be a little bit different
+如果你自己尝试的话，会发现结果有所不同，
 
 86
 00:03:06,130 --> 00:03:08,270
 because of some randomness
 in how the Train/Test
+因为电脑划分数据集和测试集的时候
 
 87
 00:03:08,270 --> 00:03:10,039
 data is partitioned.
+有一定的随机性。
 
 88
 00:03:10,039 --> 00:03:11,880
 Now, here's something
 interesting.
+现在，有一些很有趣的事情。
 
 89
 00:03:11,880 --> 00:03:14,690
 By replacing these two lines, we
 can use a different classifier
+把这两行代码去掉，我们可以用一个不一样的分类器
 
 90
 00:03:14,690 --> 00:03:16,919
 to accomplish the same task.
+来完成同样的分类任务。
 
 91
 00:03:16,919 --> 00:03:18,569
 Instead of using
 a decision tree,
+我们用KNN(K-Nearest Neighbours)
 
 92
 00:03:18,569 --> 00:03:20,930
 we'll use one called
 [? KNearestNeighbors. ?]
+来代替决策树。
 
 93
 00:03:20,930 --> 00:03:23,340
 If we run our experiment,
 we'll see that the code
+如果我们运行，会发现代码
 
 94
 00:03:23,340 --> 00:03:25,354
 works in exactly the same way.
+运行过程几乎是完全一样的。
 
 95
 00:03:25,354 --> 00:03:27,270
 The accuracy may be
 different when you run it,
+你在运行的时候，准确路可能会有所不同。
 
 96
 00:03:27,270 --> 00:03:29,800
 because this classifier works
 a little bit differently
+因为这个分类算法的原理有一些不同，
 
 97
 00:03:29,800 --> 00:03:32,440
 and because of the randomness
 in the Train/Test split.
+而且划分训练集／测试集的时候也存在随机性。
 
 98
 00:03:32,440 --> 00:03:35,419
 Likewise, if we wanted to use a
 more sophisticated classifier,
+同样地，如果想使用一些更复杂的分类器，
 
 99
 00:03:35,419 --> 00:03:38,220
 we could just import it
 and change these two lines.
+我们可以导入他们，然后替换掉这两行代码即可。
 
 100
 00:03:38,220 --> 00:03:40,297
 Otherwise, our code is the same.
+其他的代码都是完全一样的。
 
 101
 00:03:40,297 --> 00:03:42,880
 The takeaway here is that while
 there are many different types
+一个很方便地方就是，这些不同的分类算法
 
 102
 00:03:42,880 --> 00:03:45,919
 of classifiers, at a high level,
 they have a similar interface.
+在调用的时候都遵循着同样的格式。
 
 103
 00:03:45,919 --> 00:03:49,058
@@ -525,15 +590,18 @@ they have a similar interface.
 00:03:49,058 --> 00:03:50,849
 Now let's talk a little
 bit more about what
+现在让我们来看看
 
 105
 00:03:50,849 --> 00:03:53,120
 it means to learn from data.
+从“数据中学习”是什么意思。
 
 106
 00:03:53,120 --> 00:03:56,080
 Earlier, I said we called the
 features x and the labels y,
+刚开始的时候，我说
 
 107
 00:03:56,080 --> 00:03:58,717
