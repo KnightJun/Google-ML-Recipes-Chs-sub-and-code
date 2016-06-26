@@ -803,330 +803,405 @@ with our training data.
 00:05:10,290 --> 00:05:14,560
 And here's a high-level example
 of how this process works.
+现在让我们通过一个高层面的例子来看看
+分类器是如何工作的。
 
 
 141
 00:05:14,560 --> 00:05:17,380
 Let's look at a toy data set and
 think about what kind of model
+让我们先来看一个十分简单的数据集，
+然后确定用什么模型
 
 142
 00:05:17,380 --> 00:05:19,209
 we could use as a classifier.
+来作为分类器。
 
 143
 00:05:19,209 --> 00:05:20,959
 Pretend we're interested
 in distinguishing
+假设我们对于区分红点和绿点
 
 144
 00:05:20,959 --> 00:05:23,350
 between red dots and
 green dots, some of which
+有着特殊的癖好，这些点我已经
 
 145
 00:05:23,350 --> 00:05:25,079
 I've drawn here on a graph.
+标在了图上。
 
 146
 00:05:25,079 --> 00:05:27,209
 To do that, we'll use
 just two features--
+为了达到目的，我们将之用两个特征量
 
 147
 00:05:27,209 --> 00:05:29,449
 the x- and
 y-coordinates of a dot.
+x坐标 和 y坐标 来一起表示一个点。
 
 148
 00:05:29,449 --> 00:05:32,670
 Now let's think about how
 we could classify this data.
+现在让我们来想想可以如何分类这些数据。
 
 149
 00:05:32,670 --> 00:05:34,089
 We want a function
 that considers
+我们希望这个函数能够做到
 
 150
 00:05:34,089 --> 00:05:35,800
 a new dot it's
 never seen before,
+将一个之前从没有见过的一个点
 
 151
 00:05:35,800 --> 00:05:38,170
 and classifies it
 as red or green.
+通过分类，确定为是红色点还是绿色点。
 
 152
 00:05:38,170 --> 00:05:40,990
 In fact, there might be a lot
 of data we want to classify.
+事实上，我们可能希望分类大量的数据。
 
 153
 00:05:40,990 --> 00:05:42,839
 Here, I've drawn
 our testing examples
+这里，我将测试数据点
 
 154
 00:05:42,839 --> 00:05:44,959
 in light green and light red.
+标为了淡绿色和淡红色。
 
 155
 00:05:44,959 --> 00:05:47,209
 These are dots that weren't
 in our training data.
+这些点事我们训练数据集中所没有的。
 
 156
 00:05:47,209 --> 00:05:49,790
 The classifier has never
 seen them before, so how can
+分类器函数之前从来没有见过他们，
 
 157
 00:05:49,790 --> 00:05:51,699
 it predict the right label?
+所以他如何能够准确预测测试集点的颜色呢？
 
 158
 00:05:51,699 --> 00:05:53,819
 Well, imagine if we
 could somehow draw a line
+好的，想象一下我们可以通过某种方法，
 
 159
 00:05:53,819 --> 00:05:56,036
 across the data like this.
+像这样，在之间划一条线。
 
 160
 00:05:56,036 --> 00:05:57,620
 Then we could say
 the dots to the left
+然后我们可以分辨出，线左边的点
 
 161
 00:05:57,620 --> 00:06:00,089
 of the line are green and dots
 to the right of the line are
+都是绿色的，而线右边的点都是
 
 162
 00:06:00,089 --> 00:06:00,089
 red.
+红色的。
 
 163
 00:06:00,920 --> 00:06:03,430
 And this line can serve
 as our classifier.
+这样这根线就可以作为我们的分类器了。
 
 164
 00:06:03,430 --> 00:06:05,610
 So how can we learn this line?
+所以机器是如何通过下学习得到这条线的呢？
 
 165
 00:06:05,610 --> 00:06:08,240
 Well, one way is to use
 the training data to adjust
+一种方法就是用训练集去训练出
 
 166
 00:06:08,240 --> 00:06:09,880
 the parameters of a model.
+模型（y=mk+b）的参数（m and b)。
 
 167
 00:06:09,880 --> 00:06:12,829
 And let's say the model we
 use is a simple straight line
+这个模型就是我们之前提到过的
 
 168
 00:06:12,829 --> 00:06:14,459
 like we saw before.
+一条直线的模型。
 
 169
 00:06:14,459 --> 00:06:17,829
 That means we have two
 parameters to adjust-- m and b.
+那意味着我们有两个参数需要调整 m and b。
 
 170
 00:06:17,829 --> 00:06:21,050
 And by changing them, we can
 change where the line appears.
+通过调整这些参数，我们可以改变这条直线的位置。
 
 171
 00:06:21,050 --> 00:06:23,500
 So how could we learn
 the right parameters?
+所以怎样保证机器能学到正确的参数呢？
 
 172
 00:06:23,500 --> 00:06:25,690
 Well, one idea is that
 we can iteratively adjust
+一种思路是不断地用训练集
+
 
 173
 00:06:25,690 --> 00:06:27,639
 them using our training data.
+进行迭代，来调整这两个参数。
 
 174
 00:06:27,639 --> 00:06:29,889
 For example, we might
 start with a random line
+举个例子，我们可以随机取一条直线作为开始，
 
 175
 00:06:29,889 --> 00:06:32,810
 and use it to classify the
 first training example.
+用这条随机线来对训练集进行分类。
 
 176
 00:06:32,810 --> 00:06:35,370
 If it gets it right, we don't
 need to change our line,
+如果它分类争取到饿花，我们就不需要
+再改变这条线的参数，
 
 177
 00:06:35,370 --> 00:06:36,968
 so we move on to the next one.
+所以我们可以用它来进行分类。
 
 178
 00:06:36,968 --> 00:06:38,759
 But on the other hand,
 if it gets it wrong,
+但是说，如果这条线是错误的，
 
 179
 00:06:38,759 --> 00:06:41,300
 we could slightly adjust
 the parameters of our model
+我们可以稍微改变一下它的参数
 
 180
 00:06:41,300 --> 00:06:43,069
 to make it more accurate.
+让它分类的更加准确。
 
 181
 00:06:43,069 --> 00:06:44,680
 The takeaway here is this.
+机器学习在这里的定义就是，
 
 182
 00:06:44,680 --> 00:06:47,490
 One way to think of learning
 is using training data
+机器通过使用训练集数据
 
 183
 00:06:47,490 --> 00:06:50,980
 to adjust the
 parameters of a model.
+来为模型选择合适的参数。
 
 184
 00:06:50,980 --> 00:06:52,949
 Now, here's something
 really special.
+现在，让我们来看一些真正特别的东西。
 
 185
 00:06:52,949 --> 00:06:55,269
 It's called
 tensorflow/playground.
+这个网站名叫 playground.tensorflow.org
 
 186
 00:06:55,269 --> 00:06:57,370
 This is a beautiful
 example of a neural network
+这是一个优雅的学习神经网络的网站
 
 187
 00:06:57,370 --> 00:07:00,019
 you can run and experiment
 with right in your browser.
+你可以从浏览器左边这栏运行和测试。
 
 188
 00:07:00,019 --> 00:07:02,060
 Now, this deserves its
 own episode for sure,
+想要理解他需要做大量的工作，
 
 189
 00:07:02,060 --> 00:07:03,730
 but for now, go ahead
 and play with it.
+但是现在，你们只需要立刻去尝试一下就好了！
 
 190
 00:07:03,730 --> 00:07:04,930
 It's awesome.
+效果十分惊艳！
 
 191
 00:07:04,930 --> 00:07:06,630
 The playground comes
 with different data
+这个playground有着许多不同的数据集
 
 192
 00:07:06,630 --> 00:07:08,300
 sets you can try out.
+可以尝试。
 
 193
 00:07:08,300 --> 00:07:09,470
 Some are very simple.
+有些十分简单。
 
 194
 00:07:09,470 --> 00:07:12,620
 For example, we could use our
 line to classify this one.
+例如，我们可以用这根线来分类这个数据集。
 
 195
 00:07:12,620 --> 00:07:15,980
 Some data sets are
 much more complex.
+有些数据集相当的复杂。
 
 196
 00:07:15,980 --> 00:07:17,620
 This data set is
 especially hard.
+比如这个数据集就特别难。
 
 197
 00:07:17,620 --> 00:07:20,357
 And see if you can build
 a network to classify it.
+看看你是否能建立一个神经网络模型来分类他。
 
 198
 00:07:20,357 --> 00:07:21,940
 Now, you can think
 of a neural network
+现在你可以认为神经网络模型
 
 199
 00:07:21,940 --> 00:07:24,170
 as a more sophisticated
 type of classifier,
+是一个更加更加复杂的分类器，
 
 200
 00:07:24,170 --> 00:07:26,430
 like a decision tree
 or a simple line.
+就像决策树，或者一条简单的直线（那样的分类器）。
 
 201
 00:07:26,430 --> 00:07:29,190
 But in principle,
 the idea is similar.
+但是准根溯源，
+本质是相似的。
 
 202
 00:07:29,190 --> 00:07:29,190
+OK.
 OK.
 
 203
 00:07:29,690 --> 00:07:30,687
 Hope that was helpful.
+希望我们的视频对你有帮助。
 
 204
 00:07:30,687 --> 00:07:32,519
 I just created a Twitter
 that you can follow
+我们刚刚创建了Twitter，大家可以加一下，
 
 205
 00:07:32,519 --> 00:07:33,834
 to be notified of new episodes.
+用来通知新视频上线。
 
 206
 00:07:33,834 --> 00:07:36,000
 And the next one should be
 out in a couple of weeks,
+下个视频应该会在几周后推出，
 
 207
 00:07:36,000 --> 00:07:38,750
 depending on how much work I'm
 doing for Google I/O. Thanks,
+这取决于这几周我在Google工作是否繁重，
 
 208
 00:07:38,750 --> 00:07:41,620
 as always, for watching,
 and I'll see you next time.
+再见，各位保重！
 
 209
 00:07:41,620 --> 00:07:53,000
  Subtitles End: mo.dbxdb.com
+ 译者：yyn19951228
 
