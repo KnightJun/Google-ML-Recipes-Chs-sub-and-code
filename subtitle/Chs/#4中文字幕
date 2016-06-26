@@ -601,172 +601,209 @@ it means to learn from data.
 00:03:53,120 --> 00:03:56,080
 Earlier, I said we called the
 features x and the labels y,
-刚开始的时候，我说
+刚开始的时候，我说我们用到特征x 和标签y
 
 107
 00:03:56,080 --> 00:03:58,717
 because they were the input
 and output of a function.
+因为他们可以视作模型函数的输入和输出。
 
 108
 00:03:58,717 --> 00:04:00,800
 Now, of course, a function
 is something we already
+现在，当然，函数是
 
 109
 00:04:00,800 --> 00:04:02,190
 know from programming.
+我们在编程中很熟悉的一个概念。
 
 110
 00:04:02,190 --> 00:04:04,900
 def classify--
 there's our function.
+定义一个 分类器
+这就是我们的函数。
 
 111
 00:04:04,900 --> 00:04:06,919
 As we already know in
 supervised learning,
+正如我们在监督学习中已经了解到的，
 
 112
 00:04:06,919 --> 00:04:09,060
 we don't want to
 write this ourselves.
+我们不想自己重写一个这样的函数。
 
 113
 00:04:09,060 --> 00:04:12,360
 We want an algorithm to
 learn it from training data.
+我们希望一个算法自己从训练集中学习。
 
 114
 00:04:12,360 --> 00:04:15,240
 So what does it mean
 to learn a function?
+所以把分类器写成一个函数的意义是什么？
 
 115
 00:04:15,240 --> 00:04:17,120
 Well, a function is just
 a mapping from input
+其实函数就是一个输入到输出
 
 116
 00:04:17,120 --> 00:04:18,660
 to output values.
+之间的映射。
 
 117
 00:04:18,660 --> 00:04:20,660
 Here's a function you
 might have seen before-- y
+这是一个你们以前可能见过的函数
 
 118
 00:04:20,660 --> 00:04:22,699
 equals mx plus b.
+y = mx+b
 
 119
 00:04:22,699 --> 00:04:24,819
 That's the equation
 for a line, and there
+这是一条线的方程，
 
 120
 00:04:24,819 --> 00:04:27,339
 are two parameters-- m,
 which gives the slope;
+而且他有俩参数，
+m,确定了斜率；
 
 121
 00:04:27,339 --> 00:04:29,680
 and b, which gives
 the y-intercept.
+和b，即截距。
 
 122
 00:04:29,680 --> 00:04:31,110
 Given these
 parameters, of course,
+在给给定了这些参数后，当然，
 
 123
 00:04:31,110 --> 00:04:34,319
 we can plot the function
 for different values of x.
+我们可以得出对应不同x的不同的函数值。
 
 124
 00:04:34,319 --> 00:04:36,610
 Now, in supervised learning,
 our classified function
+现在，在监督学习中，我们的分类器函数
 
 125
 00:04:36,610 --> 00:04:38,420
 might have some
 parameters as well,
+也有着一些类似的参数，
 
 126
 00:04:38,420 --> 00:04:41,290
 but the input x are the
 features for an example we
+但是输入x是我们希望分类的样本，
 
 127
 00:04:41,290 --> 00:04:43,630
 want to classify,
 and the output y
+而输出y则是
 
 128
 00:04:43,630 --> 00:04:47,220
 is a label, like Spam or Not
 Spam, or a type of flower.
+一个标签，就像是否是垃圾邮件，
+或者是什么样的花。
 
 129
 00:04:47,220 --> 00:04:49,661
 So what could the body of
 the function look like?
+所以，函数的主体应该怎么写呢？
 
 130
 00:04:49,661 --> 00:04:51,910
 Well, that's the part we
 want to write algorithmically
+well,这部分我们希望通过算法，
 
 131
 00:04:51,910 --> 00:04:53,737
 or in other words, learn.
+或者说，学习，来实现。
 
 132
 00:04:53,737 --> 00:04:55,319
 The important thing
 to understand here
+在这里我们需要理解的很重要的东西
 
 133
 00:04:55,319 --> 00:04:57,130
 is we're not
 starting from scratch
+就是我们不再是凭空
 
 134
 00:04:57,130 --> 00:05:00,060
 and pulling the body of the
 function out of thin air.
+写一段代码来作为函数进行分类。
 
 135
 00:05:00,060 --> 00:05:01,990
 Instead, we start with a model.
+而是直接调用库里的模型。
 
 136
 00:05:01,990 --> 00:05:04,050
 And you can think of a
 model as the prototype for
+你可以把这个方法看作是一个原型模版函数，
 
 137
 00:05:04,050 --> 00:05:07,029
 or the rules that define
 the body of our function.
+或者是某种函数体必须遵行的格式。
 
 138
 00:05:07,029 --> 00:05:08,540
 Typically, a model
 has parameters
+一个典型的模型有着
 
 139
 00:05:08,540 --> 00:05:10,290
 that we can adjust
 with our training data.
+可以被用来通过训练集调整的参数。
 
 140
 00:05:10,290 --> 00:05:14,560
 And here's a high-level example
 of how this process works.
+
 
 141
 00:05:14,560 --> 00:05:17,380
