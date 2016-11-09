@@ -1,3 +1,6 @@
+# 官方已经出了中文字幕已经传到了优酷，此项目终止
+观看网址为： http://i.youku.com/i/UMjczOTc0NDkzNg==/custom?id=87105
+
 # Google-ML-Recipes-Chs-sub-and-code
 Google出品的机器学习入门视频的中文字幕翻译与示例代码
 
