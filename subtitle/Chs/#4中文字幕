@@ -1,0 +1,1207 @@
+1
+00:00:00,000 --> 00:00:00,000
+Youtube subtitles download by mo.dbxdb.com 
+翻译 yyn19951228
+
+2
+00:00:00,000 --> 00:00:02,844
+[MUSIC PLAYING]
+[音乐]
+
+3
+00:00:02,844 --> 00:00:06,640
+
+
+4
+00:00:06,640 --> 00:00:07,447
+Welcome back.
+欢迎回来
+
+5
+00:00:07,447 --> 00:00:09,029
+We've covered a lot
+of ground already,
+我们已经学习了很多基础知识
+
+6
+00:00:09,029 --> 00:00:12,070
+so today I want to review
+and reinforce concepts.
+所以今天我想再复习加强一下基础概念
+
+7
+00:00:12,070 --> 00:00:14,250
+To do that, we'll
+explore two things.
+我们通过两个例子作为开始
+
+8
+00:00:14,250 --> 00:00:16,090
+First, we'll code
+up a basic pipeline
+首先，我们为监督学习
+
+9
+00:00:16,090 --> 00:00:17,640
+for supervised learning.
+来码一个基础的管道封装
+
+10
+00:00:17,640 --> 00:00:19,390
+I'll show you how
+multiple classifiers
+我将会向你们展示多种分类器是如何
+
+11
+00:00:19,390 --> 00:00:21,280
+can solve the same problem.
+能够解决同样问题的。
+
+12
+00:00:21,280 --> 00:00:23,200
+Next, we'll build up a
+little more intuition
+之后，我们会获得一些对于
+
+13
+00:00:23,200 --> 00:00:25,710
+for what it means for an
+algorithm to learn something
+从数据当中建立模型和算法的启发。
+
+14
+00:00:25,710 --> 00:00:29,502
+from data, because that sounds
+kind of magical, but it's not.
+虽然看起来很神奇，但是完全不需要担心。
+
+15
+00:00:29,502 --> 00:00:31,710
+To kick things off, let's
+look at a common experiment
+作为开始，让我们来看一个很普通的，
+
+16
+00:00:31,710 --> 00:00:33,009
+you might want to do.
+你们也许很想做的实验。
+
+17
+00:00:33,009 --> 00:00:35,210
+Imagine you're building
+a spam classifier.
+想象一下你正在垃圾邮件分类器。
+
+18
+00:00:35,210 --> 00:00:37,510
+That's just a function that
+labels an incoming email
+这是一个对邮件加标签的功能，
+
+19
+00:00:37,510 --> 00:00:39,307
+as spam or not spam.
+把邮件标为垃圾邮件或者非垃圾邮件。
+
+20
+00:00:39,307 --> 00:00:41,140
+Now, say you've already
+collected a data set
+现在，假设你已经收集了一些数据集
+
+21
+00:00:41,140 --> 00:00:42,850
+and you're ready
+to train a model.
+而且你准备训练一个模型。
+
+22
+00:00:42,850 --> 00:00:44,460
+But before you put
+it into production,
+但是在你把这个模型投入到实际应用之前，
+
+23
+00:00:44,460 --> 00:00:46,760
+there's a question you
+need to answer first--
+需要首先关注一个问题！
+
+24
+00:00:46,760 --> 00:00:49,820
+how accurate will it be when you
+use it to classify emails that
+当分类的邮件不在你收集到的数据集当中的时候，
+
+25
+00:00:49,820 --> 00:00:51,740
+weren't in your training data?
+怎样保证你的模型预测是准确的？
+
+26
+00:00:51,740 --> 00:00:54,850
+As best we can, we want to
+verify our models work well
+为了能做到最好，我们希望能够在投入实际应用前
+
+27
+00:00:54,850 --> 00:00:56,490
+before we deploy them.
+确认我们的模型有最好的泛化能力。
+
+28
+00:00:56,490 --> 00:00:59,290
+And we can do an experiment
+to help us figure that out.
+我们可以做一个实验来帮助我们确认。
+
+29
+00:00:59,290 --> 00:01:02,930
+One approach is to partition
+our data set into two parts.
+我们的方法是把我们收集到的数据集一分为二。
+
+30
+00:01:02,930 --> 00:01:05,079
+We'll call these Train and Test.
+我们将它们分别称为“训练集”和“测试集”
+
+31
+00:01:05,079 --> 00:01:07,010
+We'll use Train
+to train our model
+我们将采用“训练集”去训练我们的模型。
+
+32
+00:01:07,010 --> 00:01:10,380
+and Test to see how
+accurate it is on new data.
+然后用“测试集”来测试模型的泛化准确性。
+
+33
+00:01:10,380 --> 00:01:13,890
+That's a common pattern, so
+let's see how it looks in code.
+这是一个很常见的套路，所以让我们来看看
+如何用代码来实现。
+
+34
+00:01:13,890 --> 00:01:17,060
+To kick things off, let's import
+a data set into [? SyKit. ?]
+作为开始，让我们import一个数据集到[? SyKit. ?]中
+
+35
+00:01:17,060 --> 00:01:20,019
+We'll use Iris again, because
+it's handily included.
+我们将再一次的使用“鸢尾花”数据集，因为
+这些使用十分方便。
+
+36
+00:01:20,019 --> 00:01:21,959
+Now, we already saw
+Iris in episode two.
+现在，我们已经在第二章看过“鸢尾花”数据的表现了
+
+37
+00:01:21,959 --> 00:01:23,560
+But what we haven't
+seen before is
+但是我们之前没有看过的是，
+
+38
+00:01:23,560 --> 00:01:26,831
+that I'm calling the
+features x and the labels y.
+特征x 和标签y
+
+39
+00:01:26,831 --> 00:01:28,209
+Why is that?
+为什么是这个？
+
+40
+00:01:28,209 --> 00:01:30,670
+Well, that's because one
+way to think of a classifier
+因为我们可以把分类器
+
+
+41
+00:01:30,670 --> 00:01:32,230
+is as a function.
+看成是一个函数。
+
+42
+00:01:32,230 --> 00:01:34,750
+At a high level, you can
+think of x as the input
+在抽象层面上，你可以把特征x 视作输入
+
+43
+00:01:34,750 --> 00:01:36,500
+and y as the output.
+然后把分类标签y 视作输出。
+
+44
+00:01:36,500 --> 00:01:39,892
+I'll talk more about that in
+the second half of this episode.
+我会在本视频的后半部分着重讨论这个。
+
+45
+00:01:39,892 --> 00:01:42,349
+After we import the data set,
+the first thing we want to do
+在我们导入了数据集后，我们首先要做的
+
+46
+00:01:42,349 --> 00:01:44,590
+is partition it
+into Train and Test.
+是把它们分为训练集和测试集。
+
+47
+00:01:44,590 --> 00:01:46,640
+And to do that, we can
+import a handy utility,
+我们导入一个函数来分隔数据集，
+
+48
+00:01:46,640 --> 00:01:48,530
+and it makes the syntax clear.
+让我们把程序变得优雅一点。。
+
+49
+00:01:48,530 --> 00:01:50,340
+We're taking our
+x's and our y's,
+我们把我们的x和y
+
+50
+00:01:50,340 --> 00:01:52,930
+or our features and labels,
+and partitioning them
+或者说特征和标签
+
+51
+00:01:52,930 --> 00:01:54,450
+into two sets.
+分为两部分。
+
+52
+00:01:54,450 --> 00:01:56,690
+X_train and y_train are
+the features and labels
+X_train是训练集的特征子集
+
+53
+00:01:56,690 --> 00:01:57,980
+for the training set.
+y_train是训练集的标签子集。
+
+54
+00:01:57,980 --> 00:02:00,630
+And X_test and y_test are
+the features and labels
+然后X_test是测试集的特征子集，
+
+55
+00:02:00,630 --> 00:02:02,031
+for the testing set.
+然后Y_test是测试集的标签子集，
+
+56
+00:02:02,031 --> 00:02:04,239
+Here, I'm just saying that
+I want half the data to be
+这里，我刚刚说我希望一半的数据
+
+57
+00:02:04,239 --> 00:02:05,580
+used for testing.
+能够被用作测试集。
+
+58
+00:02:05,580 --> 00:02:09,229
+So if we have 150 examples
+in Iris, 75 will be in Train
+所以如果我们有150个鸢尾花的数据，
+那么75个将用作训练，
+
+59
+00:02:09,229 --> 00:02:11,520
+and 75 will be in Test.
+还有75个将被用作测试。
+
+60
+00:02:11,520 --> 00:02:13,280
+Now we'll create our classifier.
+现在让我们来创建我们的分类器。
+
+61
+00:02:13,280 --> 00:02:14,979
+I'll use two
+different types here
+我将会用两种不同的类型（的分类器）
+
+62
+00:02:14,979 --> 00:02:17,860
+to show you how they
+accomplish the same task.
+来展示他们是如何完成同样的任务的。
+
+63
+00:02:17,860 --> 00:02:20,500
+Let's start with the decision
+tree we've already seen.
+让我们从我们已经见过的决策树开始。
+
+64
+00:02:20,500 --> 00:02:22,240
+Note there's only
+two lines of code
+注意到这里只有两行代码
+
+65
+00:02:22,240 --> 00:02:23,448
+that are classifier-specific.
+是和分类器有关的。
+
+66
+00:02:23,448 --> 00:02:25,650
+
+
+67
+00:02:25,650 --> 00:02:28,830
+Now let's train the classifier
+using our training data.
+现在让我们用训练集来训练分类器。
+
+68
+00:02:28,830 --> 00:02:31,599
+At this point, it's ready
+to be used to classify data.
+在这里，分类器准备开始分类数据。
+
+69
+00:02:31,599 --> 00:02:33,330
+And next, we'll call
+the predict method
+接下来，让我们来调用预测的方法
+
+70
+00:02:33,330 --> 00:02:35,805
+and use it to classify
+our testing data.
+然后用它来分类我们的测试集。
+
+71
+00:02:35,805 --> 00:02:37,180
+If you print out
+the predictions,
+如果你答应出预测的结果，
+
+72
+00:02:37,180 --> 00:02:38,970
+you'll see there are
+a list of numbers.
+你将会看到这样一大串数字。
+
+73
+00:02:38,970 --> 00:02:40,660
+These correspond
+to the type of Iris
+他们是分类器对于测试集中每一组数据
+
+74
+00:02:40,660 --> 00:02:44,009
+the classifier predicts for
+each row in the testing data.
+预测的鸢尾花的花型的结果。
+
+
+75
+00:02:44,009 --> 00:02:46,229
+Now let's see how
+accurate our classifier
+现在让我们来看看分类器
+
+76
+00:02:46,229 --> 00:02:48,280
+was on the testing set.
+在测试集上预测的准确度。
+
+77
+00:02:48,280 --> 00:02:50,840
+Recall that up top, we have
+the true labels for the testing
+回想一下，我们有测试集中每一组数据
+
+78
+00:02:50,840 --> 00:02:51,650
+data.
+的准确的结果。
+
+79
+00:02:51,650 --> 00:02:53,460
+To calculate our
+accuracy, we can
+为了计算我们的准确率，
+
+80
+00:02:53,460 --> 00:02:55,759
+compare the predicted
+labels to the true labels,
+我们可以把真实的标签和预测的标签做比较，
+
+81
+00:02:55,759 --> 00:02:57,348
+and tally up the score.
+然后计算出我们的得分。
+
+82
+00:02:57,348 --> 00:02:59,139
+There's a convenience
+method in [? Sykit ?]
+在sklearn中有一个很便捷的方法
+
+83
+00:02:59,139 --> 00:03:00,830
+we can import to do that.
+我们可以导入它来帮助我们。
+
+84
+00:03:00,830 --> 00:03:03,505
+Notice here, our
+accuracy was over 90%.
+注意到我们现在的准确率已经超过90%，
+
+85
+00:03:03,505 --> 00:03:06,130
+If you try this on your own, it
+might be a little bit different
+如果你自己尝试的话，会发现结果有所不同，
+
+86
+00:03:06,130 --> 00:03:08,270
+because of some randomness
+in how the Train/Test
+因为电脑划分数据集和测试集的时候
+
+87
+00:03:08,270 --> 00:03:10,039
+data is partitioned.
+有一定的随机性。
+
+88
+00:03:10,039 --> 00:03:11,880
+Now, here's something
+interesting.
+现在，有一些很有趣的事情。
+
+89
+00:03:11,880 --> 00:03:14,690
+By replacing these two lines, we
+can use a different classifier
+把这两行代码去掉，我们可以用一个不一样的分类器
+
+90
+00:03:14,690 --> 00:03:16,919
+to accomplish the same task.
+来完成同样的分类任务。
+
+91
+00:03:16,919 --> 00:03:18,569
+Instead of using
+a decision tree,
+我们用KNN(K-Nearest Neighbours)
+
+92
+00:03:18,569 --> 00:03:20,930
+we'll use one called
+[? KNearestNeighbors. ?]
+来代替决策树。
+
+93
+00:03:20,930 --> 00:03:23,340
+If we run our experiment,
+we'll see that the code
+如果我们运行，会发现代码
+
+94
+00:03:23,340 --> 00:03:25,354
+works in exactly the same way.
+运行过程几乎是完全一样的。
+
+95
+00:03:25,354 --> 00:03:27,270
+The accuracy may be
+different when you run it,
+你在运行的时候，准确路可能会有所不同。
+
+96
+00:03:27,270 --> 00:03:29,800
+because this classifier works
+a little bit differently
+因为这个分类算法的原理有一些不同，
+
+97
+00:03:29,800 --> 00:03:32,440
+and because of the randomness
+in the Train/Test split.
+而且划分训练集／测试集的时候也存在随机性。
+
+98
+00:03:32,440 --> 00:03:35,419
+Likewise, if we wanted to use a
+more sophisticated classifier,
+同样地，如果想使用一些更复杂的分类器，
+
+99
+00:03:35,419 --> 00:03:38,220
+we could just import it
+and change these two lines.
+我们可以导入他们，然后替换掉这两行代码即可。
+
+100
+00:03:38,220 --> 00:03:40,297
+Otherwise, our code is the same.
+其他的代码都是完全一样的。
+
+101
+00:03:40,297 --> 00:03:42,880
+The takeaway here is that while
+there are many different types
+一个很方便地方就是，这些不同的分类算法
+
+102
+00:03:42,880 --> 00:03:45,919
+of classifiers, at a high level,
+they have a similar interface.
+在调用的时候都遵循着同样的格式。
+
+103
+00:03:45,919 --> 00:03:49,058
+
+
+104
+00:03:49,058 --> 00:03:50,849
+Now let's talk a little
+bit more about what
+现在让我们来看看
+
+105
+00:03:50,849 --> 00:03:53,120
+it means to learn from data.
+从“数据中学习”是什么意思。
+
+106
+00:03:53,120 --> 00:03:56,080
+Earlier, I said we called the
+features x and the labels y,
+刚开始的时候，我说我们用到特征x 和标签y
+
+107
+00:03:56,080 --> 00:03:58,717
+because they were the input
+and output of a function.
+因为他们可以视作模型函数的输入和输出。
+
+108
+00:03:58,717 --> 00:04:00,800
+Now, of course, a function
+is something we already
+现在，当然，函数是
+
+109
+00:04:00,800 --> 00:04:02,190
+know from programming.
+我们在编程中很熟悉的一个概念。
+
+110
+00:04:02,190 --> 00:04:04,900
+def classify--
+there's our function.
+定义一个 分类器
+这就是我们的函数。
+
+111
+00:04:04,900 --> 00:04:06,919
+As we already know in
+supervised learning,
+正如我们在监督学习中已经了解到的，
+
+112
+00:04:06,919 --> 00:04:09,060
+we don't want to
+write this ourselves.
+我们不想自己重写一个这样的函数。
+
+113
+00:04:09,060 --> 00:04:12,360
+We want an algorithm to
+learn it from training data.
+我们希望一个算法自己从训练集中学习。
+
+114
+00:04:12,360 --> 00:04:15,240
+So what does it mean
+to learn a function?
+所以把分类器写成一个函数的意义是什么？
+
+115
+00:04:15,240 --> 00:04:17,120
+Well, a function is just
+a mapping from input
+其实函数就是一个输入到输出
+
+116
+00:04:17,120 --> 00:04:18,660
+to output values.
+之间的映射。
+
+117
+00:04:18,660 --> 00:04:20,660
+Here's a function you
+might have seen before-- y
+这是一个你们以前可能见过的函数
+
+118
+00:04:20,660 --> 00:04:22,699
+equals mx plus b.
+y = mx+b
+
+119
+00:04:22,699 --> 00:04:24,819
+That's the equation
+for a line, and there
+这是一条线的方程，
+
+120
+00:04:24,819 --> 00:04:27,339
+are two parameters-- m,
+which gives the slope;
+而且他有俩参数，
+m,确定了斜率；
+
+121
+00:04:27,339 --> 00:04:29,680
+and b, which gives
+the y-intercept.
+和b，即截距。
+
+122
+00:04:29,680 --> 00:04:31,110
+Given these
+parameters, of course,
+在给给定了这些参数后，当然，
+
+123
+00:04:31,110 --> 00:04:34,319
+we can plot the function
+for different values of x.
+我们可以得出对应不同x的不同的函数值。
+
+124
+00:04:34,319 --> 00:04:36,610
+Now, in supervised learning,
+our classified function
+现在，在监督学习中，我们的分类器函数
+
+125
+00:04:36,610 --> 00:04:38,420
+might have some
+parameters as well,
+也有着一些类似的参数，
+
+126
+00:04:38,420 --> 00:04:41,290
+but the input x are the
+features for an example we
+但是输入x是我们希望分类的样本，
+
+127
+00:04:41,290 --> 00:04:43,630
+want to classify,
+and the output y
+而输出y则是
+
+128
+00:04:43,630 --> 00:04:47,220
+is a label, like Spam or Not
+Spam, or a type of flower.
+一个标签，就像是否是垃圾邮件，
+或者是什么样的花。
+
+129
+00:04:47,220 --> 00:04:49,661
+So what could the body of
+the function look like?
+所以，函数的主体应该怎么写呢？
+
+130
+00:04:49,661 --> 00:04:51,910
+Well, that's the part we
+want to write algorithmically
+well,这部分我们希望通过算法，
+
+131
+00:04:51,910 --> 00:04:53,737
+or in other words, learn.
+或者说，学习，来实现。
+
+132
+00:04:53,737 --> 00:04:55,319
+The important thing
+to understand here
+在这里我们需要理解的很重要的东西
+
+133
+00:04:55,319 --> 00:04:57,130
+is we're not
+starting from scratch
+就是我们不再是凭空
+
+134
+00:04:57,130 --> 00:05:00,060
+and pulling the body of the
+function out of thin air.
+写一段代码来作为函数进行分类。
+
+135
+00:05:00,060 --> 00:05:01,990
+Instead, we start with a model.
+而是直接调用库里的模型。
+
+136
+00:05:01,990 --> 00:05:04,050
+And you can think of a
+model as the prototype for
+你可以把这个方法看作是一个原型模版函数，
+
+137
+00:05:04,050 --> 00:05:07,029
+or the rules that define
+the body of our function.
+或者是某种函数体必须遵行的格式。
+
+138
+00:05:07,029 --> 00:05:08,540
+Typically, a model
+has parameters
+一个典型的模型有着
+
+139
+00:05:08,540 --> 00:05:10,290
+that we can adjust
+with our training data.
+可以被用来通过训练集调整的参数。
+
+140
+00:05:10,290 --> 00:05:14,560
+And here's a high-level example
+of how this process works.
+现在让我们通过一个高层面的例子来看看
+分类器是如何工作的。
+
+
+141
+00:05:14,560 --> 00:05:17,380
+Let's look at a toy data set and
+think about what kind of model
+让我们先来看一个十分简单的数据集，
+然后确定用什么模型
+
+142
+00:05:17,380 --> 00:05:19,209
+we could use as a classifier.
+来作为分类器。
+
+143
+00:05:19,209 --> 00:05:20,959
+Pretend we're interested
+in distinguishing
+假设我们对于区分红点和绿点
+
+144
+00:05:20,959 --> 00:05:23,350
+between red dots and
+green dots, some of which
+有着特殊的癖好，这些点我已经
+
+145
+00:05:23,350 --> 00:05:25,079
+I've drawn here on a graph.
+标在了图上。
+
+146
+00:05:25,079 --> 00:05:27,209
+To do that, we'll use
+just two features--
+为了达到目的，我们将之用两个特征量
+
+147
+00:05:27,209 --> 00:05:29,449
+the x- and
+y-coordinates of a dot.
+x坐标 和 y坐标 来一起表示一个点。
+
+148
+00:05:29,449 --> 00:05:32,670
+Now let's think about how
+we could classify this data.
+现在让我们来想想可以如何分类这些数据。
+
+149
+00:05:32,670 --> 00:05:34,089
+We want a function
+that considers
+我们希望这个函数能够做到
+
+150
+00:05:34,089 --> 00:05:35,800
+a new dot it's
+never seen before,
+将一个之前从没有见过的一个点
+
+151
+00:05:35,800 --> 00:05:38,170
+and classifies it
+as red or green.
+通过分类，确定为是红色点还是绿色点。
+
+152
+00:05:38,170 --> 00:05:40,990
+In fact, there might be a lot
+of data we want to classify.
+事实上，我们可能希望分类大量的数据。
+
+153
+00:05:40,990 --> 00:05:42,839
+Here, I've drawn
+our testing examples
+这里，我将测试数据点
+
+154
+00:05:42,839 --> 00:05:44,959
+in light green and light red.
+标为了淡绿色和淡红色。
+
+155
+00:05:44,959 --> 00:05:47,209
+These are dots that weren't
+in our training data.
+这些点事我们训练数据集中所没有的。
+
+156
+00:05:47,209 --> 00:05:49,790
+The classifier has never
+seen them before, so how can
+分类器函数之前从来没有见过他们，
+
+157
+00:05:49,790 --> 00:05:51,699
+it predict the right label?
+所以他如何能够准确预测测试集点的颜色呢？
+
+158
+00:05:51,699 --> 00:05:53,819
+Well, imagine if we
+could somehow draw a line
+好的，想象一下我们可以通过某种方法，
+
+159
+00:05:53,819 --> 00:05:56,036
+across the data like this.
+像这样，在之间划一条线。
+
+160
+00:05:56,036 --> 00:05:57,620
+Then we could say
+the dots to the left
+然后我们可以分辨出，线左边的点
+
+161
+00:05:57,620 --> 00:06:00,089
+of the line are green and dots
+to the right of the line are
+都是绿色的，而线右边的点都是
+
+162
+00:06:00,089 --> 00:06:00,089
+red.
+红色的。
+
+163
+00:06:00,920 --> 00:06:03,430
+And this line can serve
+as our classifier.
+这样这根线就可以作为我们的分类器了。
+
+164
+00:06:03,430 --> 00:06:05,610
+So how can we learn this line?
+所以机器是如何通过下学习得到这条线的呢？
+
+165
+00:06:05,610 --> 00:06:08,240
+Well, one way is to use
+the training data to adjust
+一种方法就是用训练集去训练出
+
+166
+00:06:08,240 --> 00:06:09,880
+the parameters of a model.
+模型（y=mk+b）的参数（m and b)。
+
+167
+00:06:09,880 --> 00:06:12,829
+And let's say the model we
+use is a simple straight line
+这个模型就是我们之前提到过的
+
+168
+00:06:12,829 --> 00:06:14,459
+like we saw before.
+一条直线的模型。
+
+169
+00:06:14,459 --> 00:06:17,829
+That means we have two
+parameters to adjust-- m and b.
+那意味着我们有两个参数需要调整 m and b。
+
+170
+00:06:17,829 --> 00:06:21,050
+And by changing them, we can
+change where the line appears.
+通过调整这些参数，我们可以改变这条直线的位置。
+
+171
+00:06:21,050 --> 00:06:23,500
+So how could we learn
+the right parameters?
+所以怎样保证机器能学到正确的参数呢？
+
+172
+00:06:23,500 --> 00:06:25,690
+Well, one idea is that
+we can iteratively adjust
+一种思路是不断地用训练集
+
+
+173
+00:06:25,690 --> 00:06:27,639
+them using our training data.
+进行迭代，来调整这两个参数。
+
+174
+00:06:27,639 --> 00:06:29,889
+For example, we might
+start with a random line
+举个例子，我们可以随机取一条直线作为开始，
+
+175
+00:06:29,889 --> 00:06:32,810
+and use it to classify the
+first training example.
+用这条随机线来对训练集进行分类。
+
+176
+00:06:32,810 --> 00:06:35,370
+If it gets it right, we don't
+need to change our line,
+如果它分类争取到饿花，我们就不需要
+再改变这条线的参数，
+
+177
+00:06:35,370 --> 00:06:36,968
+so we move on to the next one.
+所以我们可以用它来进行分类。
+
+178
+00:06:36,968 --> 00:06:38,759
+But on the other hand,
+if it gets it wrong,
+但是说，如果这条线是错误的，
+
+179
+00:06:38,759 --> 00:06:41,300
+we could slightly adjust
+the parameters of our model
+我们可以稍微改变一下它的参数
+
+180
+00:06:41,300 --> 00:06:43,069
+to make it more accurate.
+让它分类的更加准确。
+
+181
+00:06:43,069 --> 00:06:44,680
+The takeaway here is this.
+机器学习在这里的定义就是，
+
+182
+00:06:44,680 --> 00:06:47,490
+One way to think of learning
+is using training data
+机器通过使用训练集数据
+
+183
+00:06:47,490 --> 00:06:50,980
+to adjust the
+parameters of a model.
+来为模型选择合适的参数。
+
+184
+00:06:50,980 --> 00:06:52,949
+Now, here's something
+really special.
+现在，让我们来看一些真正特别的东西。
+
+185
+00:06:52,949 --> 00:06:55,269
+It's called
+tensorflow/playground.
+这个网站名叫 playground.tensorflow.org
+
+186
+00:06:55,269 --> 00:06:57,370
+This is a beautiful
+example of a neural network
+这是一个优雅的学习神经网络的网站
+
+187
+00:06:57,370 --> 00:07:00,019
+you can run and experiment
+with right in your browser.
+你可以从浏览器左边这栏运行和测试。
+
+188
+00:07:00,019 --> 00:07:02,060
+Now, this deserves its
+own episode for sure,
+想要理解他需要做大量的工作，
+
+189
+00:07:02,060 --> 00:07:03,730
+but for now, go ahead
+and play with it.
+但是现在，你们只需要立刻去尝试一下就好了！
+
+190
+00:07:03,730 --> 00:07:04,930
+It's awesome.
+效果十分惊艳！
+
+191
+00:07:04,930 --> 00:07:06,630
+The playground comes
+with different data
+这个playground有着许多不同的数据集
+
+192
+00:07:06,630 --> 00:07:08,300
+sets you can try out.
+可以尝试。
+
+193
+00:07:08,300 --> 00:07:09,470
+Some are very simple.
+有些十分简单。
+
+194
+00:07:09,470 --> 00:07:12,620
+For example, we could use our
+line to classify this one.
+例如，我们可以用这根线来分类这个数据集。
+
+195
+00:07:12,620 --> 00:07:15,980
+Some data sets are
+much more complex.
+有些数据集相当的复杂。
+
+196
+00:07:15,980 --> 00:07:17,620
+This data set is
+especially hard.
+比如这个数据集就特别难。
+
+197
+00:07:17,620 --> 00:07:20,357
+And see if you can build
+a network to classify it.
+看看你是否能建立一个神经网络模型来分类他。
+
+198
+00:07:20,357 --> 00:07:21,940
+Now, you can think
+of a neural network
+现在你可以认为神经网络模型
+
+199
+00:07:21,940 --> 00:07:24,170
+as a more sophisticated
+type of classifier,
+是一个更加更加复杂的分类器，
+
+200
+00:07:24,170 --> 00:07:26,430
+like a decision tree
+or a simple line.
+就像决策树，或者一条简单的直线（那样的分类器）。
+
+201
+00:07:26,430 --> 00:07:29,190
+But in principle,
+the idea is similar.
+但是准根溯源，
+本质是相似的。
+
+202
+00:07:29,190 --> 00:07:29,190
+OK.
+OK.
+
+203
+00:07:29,690 --> 00:07:30,687
+Hope that was helpful.
+希望我们的视频对你有帮助。
+
+204
+00:07:30,687 --> 00:07:32,519
+I just created a Twitter
+that you can follow
+我们刚刚创建了Twitter，大家可以加一下，
+
+205
+00:07:32,519 --> 00:07:33,834
+to be notified of new episodes.
+用来通知新视频上线。
+
+206
+00:07:33,834 --> 00:07:36,000
+And the next one should be
+out in a couple of weeks,
+下个视频应该会在几周后推出，
+
+207
+00:07:36,000 --> 00:07:38,750
+depending on how much work I'm
+doing for Google I/O. Thanks,
+这取决于这几周我在Google工作是否繁重，
+
+208
+00:07:38,750 --> 00:07:41,620
+as always, for watching,
+and I'll see you next time.
+再见，各位保重！
+
+209
+00:07:41,620 --> 00:07:53,000
+ Subtitles End: mo.dbxdb.com
+ 译者：yyn19951228
+

@@ -1,0 +1,1032 @@
+1
+00:00:00,000 --> 00:00:00,000
+Youtube subtitles download by mo.dbxdb.com 
+
+2
+00:00:00,000 --> 00:00:06,030
+[MUSIC PLAYING]
+
+3
+00:00:06,030 --> 00:00:06,030
+Hey, everyone.
+
+4
+00:00:06,710 --> 00:00:07,910
+Welcome back.
+
+5
+00:00:07,910 --> 00:00:10,220
+In this episode, we're going
+to do something special,
+
+6
+00:00:10,220 --> 00:00:13,164
+and that's write our own
+classifier from scratch.
+
+7
+00:00:13,164 --> 00:00:14,580
+If you're new to
+machine learning,
+
+8
+00:00:14,580 --> 00:00:16,170
+this is a big milestone.
+
+9
+00:00:16,170 --> 00:00:18,560
+Because if you can follow
+along and do this on your own,
+
+10
+00:00:18,560 --> 00:00:21,890
+it means you understand an
+important piece of the puzzle.
+
+11
+00:00:21,890 --> 00:00:23,670
+The classifier we're
+going to write today
+
+12
+00:00:23,670 --> 00:00:26,390
+is a scrappy version
+of k-Nearest Neighbors.
+
+13
+00:00:26,390 --> 00:00:29,660
+That's one of the simplest
+classifiers around.
+
+14
+00:00:29,660 --> 00:00:32,860
+First, here's a quick outline of
+what we'll do in this episode.
+
+15
+00:00:32,860 --> 00:00:35,170
+We'll start with our code
+from Episode 4, Let's
+
+16
+00:00:35,170 --> 00:00:36,570
+Write a Pipeline.
+
+17
+00:00:36,570 --> 00:00:39,290
+Recall in that episode we
+did a simple experiment.
+
+18
+00:00:39,290 --> 00:00:42,720
+We imported a data set and
+split it into train and test.
+
+19
+00:00:42,720 --> 00:00:44,580
+We used train to
+train a classifier,
+
+20
+00:00:44,580 --> 00:00:47,150
+and test to see how
+accurate it was.
+
+21
+00:00:47,150 --> 00:00:48,760
+Writing the
+classifier is the part
+
+22
+00:00:48,760 --> 00:00:50,940
+we're going to focus on today.
+
+23
+00:00:50,940 --> 00:00:52,740
+Previously we imported
+the classifier
+
+24
+00:00:52,740 --> 00:00:55,280
+from a library using
+these two lines.
+
+25
+00:00:55,280 --> 00:00:58,190
+Here we'll comment them
+out and write our own.
+
+26
+00:00:58,190 --> 00:01:01,539
+The rest of the pipeline
+will stay exactly the same.
+
+27
+00:01:01,539 --> 00:01:03,830
+I'll pop in and out of the
+screencast to explain things
+
+28
+00:01:03,830 --> 00:01:05,940
+as we go along.
+
+29
+00:01:05,940 --> 00:01:08,530
+To start, let's run our
+pipeline to remind ourselves
+
+30
+00:01:08,530 --> 00:01:10,120
+what the accuracy was.
+
+31
+00:01:10,120 --> 00:01:12,370
+As you can see, it's over 90%.
+
+32
+00:01:12,370 --> 00:01:14,260
+And that's the goal
+for the classifier
+
+33
+00:01:14,260 --> 00:01:15,660
+we'll write ourselves.
+
+34
+00:01:15,660 --> 00:01:17,680
+Now let's comment
+out that import.
+
+35
+00:01:17,680 --> 00:01:19,540
+Right off the bat,
+this breaks our code.
+
+36
+00:01:19,540 --> 00:01:22,250
+So the first thing we need
+to do is fix our pipeline.
+
+37
+00:01:22,250 --> 00:01:24,849
+And to do that, we'll implement
+a class for our classifier.
+
+38
+00:01:24,849 --> 00:01:27,690
+
+
+39
+00:01:27,690 --> 00:01:29,580
+I'll call it ScrappyKNN.
+
+40
+00:01:29,580 --> 00:01:31,690
+And by scrappy, I
+mean bare bones.
+
+41
+00:01:31,690 --> 00:01:33,709
+Just enough to get it working.
+
+42
+00:01:33,709 --> 00:01:38,110
+Next, I'll change our
+pipeline to use it.
+
+43
+00:01:38,110 --> 00:01:40,880
+Now let's see what methods
+we need to implement.
+
+44
+00:01:40,880 --> 00:01:42,950
+Looking at the interface
+for a classifier,
+
+45
+00:01:42,950 --> 00:01:45,500
+we see there are two
+we care about-- fit,
+
+46
+00:01:45,500 --> 00:01:47,470
+which does the
+training, and predict,
+
+47
+00:01:47,470 --> 00:01:49,270
+which does the prediction.
+
+48
+00:01:49,270 --> 00:01:51,599
+First we'll declare
+our fit method.
+
+49
+00:01:51,599 --> 00:01:54,440
+Remember this takes the features
+and labels for the training set
+
+50
+00:01:54,440 --> 00:01:57,680
+as input, so we'll add
+parameters for those.
+
+51
+00:01:57,680 --> 00:02:00,090
+Now let's move on to
+our predict method.
+
+52
+00:02:00,090 --> 00:02:03,470
+As input, this receives the
+features for our testing data.
+
+53
+00:02:03,470 --> 00:02:06,920
+And as output, it returns
+predictions for the labels.
+
+54
+00:02:06,920 --> 00:02:09,389
+Our first goal is to get
+the pipeline working,
+
+55
+00:02:09,389 --> 00:02:12,229
+and to understand
+what these methods do.
+
+56
+00:02:12,229 --> 00:02:14,180
+So before we write
+our real classifier,
+
+57
+00:02:14,180 --> 00:02:15,810
+we'll start with
+something simpler.
+
+58
+00:02:15,810 --> 00:02:18,240
+We'll write a random classifier.
+
+59
+00:02:18,240 --> 00:02:21,690
+And by random, I mean
+we'll just guess the label.
+
+60
+00:02:21,690 --> 00:02:25,310
+To start, we'll add some code
+to the fit and predict methods.
+
+61
+00:02:25,310 --> 00:02:28,460
+In fit, I'll store the
+training data in this class.
+
+62
+00:02:28,460 --> 00:02:30,479
+You can think of this
+as just memorizing it.
+
+63
+00:02:30,479 --> 00:02:32,840
+And you'll see why
+we do that later on.
+
+64
+00:02:32,840 --> 00:02:34,669
+Inside the predict
+method, remember
+
+65
+00:02:34,669 --> 00:02:37,410
+that we'll need to return
+a list of predictions.
+
+66
+00:02:37,410 --> 00:02:40,090
+That's because the parameter,
+X_test, is actually
+
+67
+00:02:40,090 --> 00:02:42,729
+a 2D array, or list of lists.
+
+68
+00:02:42,729 --> 00:02:46,410
+Each row contains the features
+for one testing example.
+
+69
+00:02:46,410 --> 00:02:48,169
+To make a prediction
+for each row,
+
+70
+00:02:48,169 --> 00:02:50,830
+I'll just randomly pick a
+label from the training data
+
+71
+00:02:50,830 --> 00:02:53,340
+and append that to
+our predictions.
+
+72
+00:02:53,340 --> 00:02:55,660
+At this point, our
+pipeline is working again.
+
+73
+00:02:55,660 --> 00:02:58,028
+So let's run it and
+see how well it does.
+
+74
+00:02:58,028 --> 00:03:00,069
+Recall there are three
+different types of flowers
+
+75
+00:03:00,069 --> 00:03:05,069
+in the iris dataset, so
+accuracy should be about 33%.
+
+76
+00:03:05,069 --> 00:03:07,110
+Now we know the interface
+for a classifier.
+
+77
+00:03:07,110 --> 00:03:09,060
+But when we started
+this exercise,
+
+78
+00:03:09,060 --> 00:03:11,770
+our accuracy was above 90%.
+
+79
+00:03:11,770 --> 00:03:14,500
+So let's see if
+we can do better.
+
+80
+00:03:14,500 --> 00:03:16,849
+To do that, we'll
+implement our classifier,
+
+81
+00:03:16,849 --> 00:03:19,380
+which is based on
+k-Nearest Neighbors.
+
+82
+00:03:19,380 --> 00:03:22,468
+Here's the intuition for
+how that algorithm works.
+
+83
+00:03:22,468 --> 00:03:24,759
+Let's return to our drawings
+of green dots and red dots
+
+84
+00:03:24,759 --> 00:03:26,400
+from the last episode.
+
+85
+00:03:26,400 --> 00:03:27,990
+Imagine the dots we
+see on the screen
+
+86
+00:03:27,990 --> 00:03:30,880
+are the training data we
+memorized in the fit method,
+
+87
+00:03:30,880 --> 00:03:33,419
+say for a toy dataset.
+
+88
+00:03:33,419 --> 00:03:36,220
+Now imagine we're asked to make
+a prediction for this testing
+
+89
+00:03:36,220 --> 00:03:38,259
+point that I'll
+draw here in gray.
+
+90
+00:03:38,259 --> 00:03:39,960
+How can we do that?
+
+91
+00:03:39,960 --> 00:03:41,889
+Well in a nearest
+neighbor classifier,
+
+92
+00:03:41,889 --> 00:03:44,220
+it works exactly like it sounds.
+
+93
+00:03:44,220 --> 00:03:45,940
+We'll find the
+training point that's
+
+94
+00:03:45,940 --> 00:03:48,069
+closest to the testing point.
+
+95
+00:03:48,069 --> 00:03:50,392
+This point is the
+nearest neighbor.
+
+96
+00:03:50,392 --> 00:03:51,849
+Then we'll predict
+that the testing
+
+97
+00:03:51,849 --> 00:03:54,169
+point has the same label.
+
+98
+00:03:54,169 --> 00:03:56,880
+For example, we'll guess that
+this testing dot is green,
+
+99
+00:03:56,880 --> 00:03:59,880
+because that's the color
+of its nearest neighbor.
+
+100
+00:03:59,880 --> 00:04:02,430
+As another example, if we
+had a testing dot over here,
+
+101
+00:04:02,430 --> 00:04:04,169
+we'd guess that it's red.
+
+102
+00:04:04,169 --> 00:04:06,400
+Now what about this one
+right in the middle?
+
+103
+00:04:06,400 --> 00:04:08,729
+Imagine that this dot is
+equidistant to the nearest
+
+104
+00:04:08,729 --> 00:04:10,750
+green dot and the
+nearest red one.
+
+105
+00:04:10,750 --> 00:04:13,569
+There's a tie, so how
+could we classify it?
+
+106
+00:04:13,569 --> 00:04:15,960
+Well one way is we could
+randomly break the tie.
+
+107
+00:04:15,960 --> 00:04:18,970
+But there's another way,
+and that's where k comes in.
+
+108
+00:04:18,970 --> 00:04:20,680
+K is the number of
+neighbors we consider
+
+109
+00:04:20,680 --> 00:04:22,339
+when making our prediction.
+
+110
+00:04:22,339 --> 00:04:25,529
+If k was 1, we'd just look at
+the closest training point.
+
+111
+00:04:25,529 --> 00:04:28,170
+But if k was 3, we'd look
+at the three closest.
+
+112
+00:04:28,170 --> 00:04:30,860
+In this case, two of those
+are green and one is red.
+
+113
+00:04:30,860 --> 00:04:34,410
+To predict, we could vote and
+predict the majority class.
+
+114
+00:04:34,410 --> 00:04:36,230
+Now there's more detail
+to this algorithm,
+
+115
+00:04:36,230 --> 00:04:38,540
+but that's enough
+to get us started.
+
+116
+00:04:38,540 --> 00:04:40,199
+To code this up,
+first we'll need a way
+
+117
+00:04:40,199 --> 00:04:42,699
+to find the nearest neighbor.
+
+118
+00:04:42,699 --> 00:04:44,839
+And to do that, we'll
+measure the straight line
+
+119
+00:04:44,839 --> 00:04:48,949
+distance between two points,
+just like you do with a ruler.
+
+120
+00:04:48,949 --> 00:04:52,100
+There's a formula for that
+called the Euclidean Distance,
+
+121
+00:04:52,100 --> 00:04:54,310
+and here's what the
+formula looks like.
+
+122
+00:04:54,310 --> 00:04:56,589
+It measures the distance
+between two points,
+
+123
+00:04:56,589 --> 00:04:59,250
+and it works a bit like
+the Pythagorean Theorem.
+
+124
+00:04:59,250 --> 00:05:02,350
+A squared plus B squared
+equals C squared.
+
+125
+00:05:02,350 --> 00:05:04,790
+You can think of this term
+as A, or the difference
+
+126
+00:05:04,790 --> 00:05:06,839
+between the first two features.
+
+127
+00:05:06,839 --> 00:05:08,670
+Likewise, you can think
+of this term as B,
+
+128
+00:05:08,670 --> 00:05:11,170
+or the difference between
+the second pair of features.
+
+129
+00:05:11,170 --> 00:05:14,740
+And the distance we compute is
+the length of the hypotenuse.
+
+130
+00:05:14,740 --> 00:05:16,459
+Now here's something cool.
+
+131
+00:05:16,459 --> 00:05:17,940
+Right now we're
+computing distance
+
+132
+00:05:17,940 --> 00:05:20,670
+in two-dimensional space,
+because we have just two
+
+133
+00:05:20,670 --> 00:05:22,779
+features in our toy dataset.
+
+134
+00:05:22,779 --> 00:05:25,970
+But what if we had three
+features or three dimensions?
+
+135
+00:05:25,970 --> 00:05:28,199
+Well then we'd be in a cube.
+
+136
+00:05:28,199 --> 00:05:30,449
+We can still visualize
+how to measure distance
+
+137
+00:05:30,449 --> 00:05:32,500
+in the space with a ruler.
+
+138
+00:05:32,500 --> 00:05:35,269
+But what if we had four
+features or four dimensions,
+
+139
+00:05:35,269 --> 00:05:36,709
+like we do in iris?
+
+140
+00:05:36,709 --> 00:05:38,500
+Well, now we're in
+a hypercube, and we
+
+141
+00:05:38,500 --> 00:05:40,740
+can't visualize this very easy.
+
+142
+00:05:40,740 --> 00:05:42,449
+The good news is the
+Euclidean Distance
+
+143
+00:05:42,449 --> 00:05:46,009
+works the same way regardless
+of the number of dimensions.
+
+144
+00:05:46,009 --> 00:05:50,050
+With more features, we can just
+add more terms to the equation.
+
+145
+00:05:50,050 --> 00:05:52,060
+You can find more details
+about this online.
+
+146
+00:05:52,060 --> 00:05:54,670
+
+
+147
+00:05:54,670 --> 00:05:56,769
+Now let's code up
+Euclidean distance.
+
+148
+00:05:56,769 --> 00:05:58,269
+There are plenty
+of ways to do that,
+
+149
+00:05:58,269 --> 00:06:00,370
+but we'll use a library
+called scipy that's
+
+150
+00:06:00,370 --> 00:06:02,459
+already installed by Anaconda.
+
+151
+00:06:02,459 --> 00:06:05,380
+Here, A and B are lists
+of numeric features.
+
+152
+00:06:05,380 --> 00:06:07,329
+Say A is a point from
+our training data,
+
+153
+00:06:07,329 --> 00:06:09,800
+and B is a point from
+our testing data.
+
+154
+00:06:09,800 --> 00:06:12,860
+This function returns the
+distance between them.
+
+155
+00:06:12,860 --> 00:06:14,440
+That's all the math
+we need, so now
+
+156
+00:06:14,440 --> 00:06:17,389
+let's take a look at the
+algorithm for a classifier.
+
+157
+00:06:17,389 --> 00:06:19,480
+To make a prediction
+for a test point,
+
+158
+00:06:19,480 --> 00:06:22,250
+we'll calculate the distance
+to all the training points.
+
+159
+00:06:22,250 --> 00:06:25,029
+Then we'll predict the testing
+point has the same label
+
+160
+00:06:25,029 --> 00:06:27,139
+as the closest one.
+
+161
+00:06:27,139 --> 00:06:28,910
+I'll delete the random
+prediction we made,
+
+162
+00:06:28,910 --> 00:06:31,610
+and replace it with a method
+that finds the closest training
+
+163
+00:06:31,610 --> 00:06:33,470
+point to the test point.
+
+164
+00:06:33,470 --> 00:06:35,579
+For this video hard,
+I'll hard-code k to 1,
+
+165
+00:06:35,579 --> 00:06:38,089
+so we're writing a nearest
+neighbor classifier.
+
+166
+00:06:38,089 --> 00:06:40,100
+The k variable won't
+appear in our code,
+
+167
+00:06:40,100 --> 00:06:42,949
+since we'll always just
+find the closest point.
+
+168
+00:06:42,949 --> 00:06:45,699
+Inside this method, we'll loop
+over all the training points
+
+169
+00:06:45,699 --> 00:06:48,250
+and keep track of the
+closest one so far.
+
+170
+00:06:48,250 --> 00:06:50,649
+Remember that we memorized
+the training data in our fit
+
+171
+00:06:50,649 --> 00:06:54,190
+function, and X_train
+contains the features.
+
+172
+00:06:54,190 --> 00:06:56,910
+To start, I'll calculate the
+distance from the test point
+
+173
+00:06:56,910 --> 00:06:58,740
+to the first training point.
+
+174
+00:06:58,740 --> 00:07:00,990
+I'll use this variable to
+keep track of the shortest
+
+175
+00:07:00,990 --> 00:07:02,584
+distance we've found so far.
+
+176
+00:07:02,584 --> 00:07:04,000
+And I'll use this
+variable to keep
+
+177
+00:07:04,000 --> 00:07:07,399
+track of the index of the
+training point that's closest.
+
+178
+00:07:07,399 --> 00:07:09,910
+We'll need this later
+to retrieve its label.
+
+179
+00:07:09,910 --> 00:07:12,370
+Now we'll iterate over all
+the other training points.
+
+180
+00:07:12,370 --> 00:07:14,410
+And every time we
+find a closer one,
+
+181
+00:07:14,410 --> 00:07:16,149
+we'll update our variables.
+
+182
+00:07:16,149 --> 00:07:18,100
+Finally, we'll use
+the index to return
+
+183
+00:07:18,100 --> 00:07:22,110
+the label for the
+closest training example.
+
+184
+00:07:22,110 --> 00:07:24,779
+At this point, we have a working
+nearest neighbor classifier,
+
+185
+00:07:24,779 --> 00:07:29,509
+so let's run it and see
+what the accuracy is.
+
+186
+00:07:29,509 --> 00:07:31,329
+As you can see, it's over 90%.
+
+187
+00:07:31,329 --> 00:07:32,250
+And we did it.
+
+188
+00:07:32,250 --> 00:07:34,240
+When you run this on
+your own, the accuracy
+
+189
+00:07:34,240 --> 00:07:36,906
+might be a bit different because
+of randomness in the train test
+
+190
+00:07:36,906 --> 00:07:38,529
+split.
+
+191
+00:07:38,529 --> 00:07:40,740
+Now if you can code this
+up and understand it,
+
+192
+00:07:40,740 --> 00:07:42,670
+that's a big
+accomplishment because it
+
+193
+00:07:42,670 --> 00:07:46,254
+means you can write a simple
+classifier from scratch.
+
+194
+00:07:46,254 --> 00:07:47,920
+Now, there are a
+number of pros and cons
+
+195
+00:07:47,920 --> 00:07:50,850
+to this algorithm, many of
+which you can find online.
+
+196
+00:07:50,850 --> 00:07:53,579
+The basic pro is that it's
+relatively easy to understand,
+
+197
+00:07:53,579 --> 00:07:56,000
+and works reasonably
+well for some problems.
+
+198
+00:07:56,000 --> 00:07:57,670
+And the basic cons
+are that it's slow,
+
+199
+00:07:57,670 --> 00:07:59,990
+because it has to iterate
+over every training point
+
+200
+00:07:59,990 --> 00:08:01,550
+to make a prediction.
+
+201
+00:08:01,550 --> 00:08:04,069
+And importantly, as
+we saw in Episode 3,
+
+202
+00:08:04,069 --> 00:08:06,384
+some features are more
+informative than others.
+
+203
+00:08:06,384 --> 00:08:08,050
+But there's not an
+easy way to represent
+
+204
+00:08:08,050 --> 00:08:10,120
+that in k-Nearest Neighbors.
+
+205
+00:08:10,120 --> 00:08:12,149
+In the long run, we
+want a classifier
+
+206
+00:08:12,149 --> 00:08:15,259
+that learns more complex
+relationships between features
+
+207
+00:08:15,259 --> 00:08:17,290
+and the label we're
+trying to predict.
+
+208
+00:08:17,290 --> 00:08:19,490
+A decision tree is a
+good example of that.
+
+209
+00:08:19,490 --> 00:08:22,120
+And a neural network like we
+saw in TensorFlow Playground
+
+210
+00:08:22,120 --> 00:08:23,730
+is even better.
+
+211
+00:08:23,730 --> 00:08:24,940
+OK, hope that was helpful.
+
+212
+00:08:24,940 --> 00:08:26,226
+Thanks as always for watching.
+
+213
+00:08:26,226 --> 00:08:28,560
+You can follow me on Twitter
+for updates and, of course,
+
+214
+00:08:28,560 --> 00:08:29,310
+Google Developers.
+
+215
+00:08:29,310 --> 00:08:32,190
+And I'll see you guys next time.
+
+216
+00:08:32,190 --> 00:08:35,539
+[MUSIC PLAYING]
+
+217
+00:08:35,539 --> 00:08:43,000
+ Subtitles End: mo.dbxdb.com
+
